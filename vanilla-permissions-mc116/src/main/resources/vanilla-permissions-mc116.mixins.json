@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.drex.vanillapermissions.mc116.mixin",
+  "plugin": "me.drex.vanillapermissions.MixinConfigPlugin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "bypass.chat_speed.ServerGamePacketListenerImplMixin",
+    "bypass.force_gamemode.DefaultGameModeCommandsMixin",
+    "bypass.force_gamemode.ServerPlayerMixin",
+    "debugstick.DebugStickItemMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

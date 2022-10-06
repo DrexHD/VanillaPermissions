@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "vanilla-permissions-mc117",
+  "version": "${version}",
+  "name": "Vanilla Permissions for 1.17",
+  "description": "Version-specific code for Minecraft 1.17",
+  "authors": [
+    "Drex"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "me.drex.vanillapermissions.mc117.VanillaPermissionsMod1_17"
+    ]
+  },
+  "custom": {
+    "modmenu": {
+      "parent": "vanilla-permissions",
+      "badges": [
+        "library"
+      ]
+    }
+  },
+  "mixins": [
+    "vanilla-permissions-mc117.mixins.json"
+  ],
+  "depends": {
+    "minecraft": ">=1.14 <=1.17.1"
+  }
+}

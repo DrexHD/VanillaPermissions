@@ -1,0 +1,11 @@
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+    // Fabric API modules
+    Set<String> apiModules = [
+            'fabric-command-api-v1'
+    ]
+    apiModules.forEach {
+        modImplementation(include(fabricApi.module(it, project.fabric_version)))
+    }
+}

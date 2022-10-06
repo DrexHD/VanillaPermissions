@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "vanilla-permissions-mc118",
+  "version": "${version}",
+  "name": "Vanilla Permissions for 1.18",
+  "description": "Version-specific code for Minecraft 1.18",
+  "authors": [
+    "Drex"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "me.drex.vanillapermissions.mc118.VanillaPermissionsMod1_18"
+    ]
+  },
+  "custom": {
+    "modmenu": {
+      "parent": "vanilla-permissions",
+      "badges": [
+        "library"
+      ]
+    }
+  },
+  "mixins": [
+    "vanilla-permissions-mc118.mixins.json"
+  ],
+  "depends": {
+    "minecraft": ">=1.14 <=1.18.2"
+  }
+}

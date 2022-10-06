@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "vanilla-permissions-mc114",
+  "version": "${version}",
+  "name": "Vanilla Permissions for 1.14",
+  "description": "Version-specific code for Minecraft 1.14",
+  "authors": [
+    "Drex"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "me.drex.vanillapermissions.mc114.VanillaPermissionsMod1_14"
+    ]
+  },
+  "custom": {
+    "modmenu": {
+      "parent": "vanilla-permissions",
+      "badges": [
+        "library"
+      ]
+    }
+  },
+  "mixins": [
+    "vanilla-permissions-mc114.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "1.14.x"
+  }
+}

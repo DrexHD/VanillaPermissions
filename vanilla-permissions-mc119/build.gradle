@@ -1,0 +1,15 @@
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+    // Fabric API modules
+    Set<String> apiModules = [
+            'fabric-command-api-v2'
+    ]
+    apiModules.forEach {
+        modImplementation(include(fabricApi.module(it, project.fabric_version)))
+    }
+}
+
+loom {
+    accessWidenerPath.set(file("src/main/resources/vanilla-permissions-mc119.accesswidener"))
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "vanilla-permissions",
+  "version": "${version}",
+  "name": "Vanilla Permissions",
+  "description": "Adds permission checks into vanilla, to allow for full permission customization",
+  "authors": [
+    "DrexHD"
+  ],
+  "contact": {
+    "sources": "https://github.com/Drex/vanilla-permissions"
+  },
+  "license": "MIT",
+  "icon": "assets/vanilla-permissions/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "me.drex.vanillapermissions.VanillaPermissionsMod"
+    ],
+    "preLaunch": [
+      "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
+    ]
+  },
+  "mixins": [
+    "vanilla-permissions.mixins.json"
+  ],
+  "accessWidener": "vanilla-permissions.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.14.9",
+    "fabric-permissions-api-v0": "*",
+    "minecraft": ">=1.14 <=1.19.2",
+    "java": ">=17"
+  },
+  "suggests": {
+    "luckperms": "*"
+  }
+}

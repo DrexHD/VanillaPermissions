@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "vanilla-permissions-mc116",
+  "version": "${version}",
+  "name": "Vanilla Permissions for 1.16",
+  "description": "Version-specific code for Minecraft 1.16",
+  "authors": [
+    "Drex"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "me.drex.vanillapermissions.mc116.VanillaPermissionsMod1_16"
+    ]
+  },
+  "custom": {
+    "modmenu": {
+      "parent": "vanilla-permissions",
+      "badges": [
+        "library"
+      ]
+    }
+  },
+  "mixins": [
+    "vanilla-permissions-mc116.mixins.json"
+  ],
+  "depends": {
+    "minecraft": ">=1.14 <=1.16.5"
+  }
+}

@@ -1,0 +1,4 @@
+accessWidener	v1	named
+accessible    class    net/minecraft/client/gui/screens/debug/GameModeSwitcherScreen$GameModeIcon
+accessible    field    net/minecraft/client/gui/screens/debug/GameModeSwitcherScreen$GameModeIcon    command    Ljava/lang/String;
+
