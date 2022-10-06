@@ -7,7 +7,6 @@
   "authors": [
     "Drex"
   ],
-  "contact": {},
   "license": "MIT",
   "environment": "server",
   "entrypoints": {

@@ -8,7 +8,8 @@
     "DrexHD"
   ],
   "contact": {
-    "sources": "https://github.com/Drex/vanilla-permissions"
+    "sources": "https://github.com/DrexHD/VanillaPermissions",
+    "issues": "https://github.com/DrexHD/VanillaPermissions/issues"
   },
   "license": "MIT",
   "icon": "assets/vanilla-permissions/icon.png",
