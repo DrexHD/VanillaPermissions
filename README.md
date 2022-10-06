@@ -24,18 +24,21 @@ This mod adds permission checks into vanilla, to allow for full permission custo
 ## Commands
 Command permissions use the node system of [brigadier](https://github.com/Mojang/brigadier). Each node has its own 
 permission, e.g. to get access to the `/gamemode survival` command `minecraft.command.gamemode` permission is required 
-for access to the `/gamemode` command node and `minecraft.command.gamemode.survival` is required to be able to run 
+for access to the `/gamemode` command node, and `minecraft.command.gamemode.survival` is required to be able to run 
 `/gamemode survival`. If you wish to grant full access to a command you need to give access to all child nodes, e.g.
 `minecraft.command.gamemode.*`.
 
-## Quality of Live
+## Quality of Life
 
 ### Server Side
-If the mod is installed server side, it will make clients think they're OP. This allows players with [appropriate 
+* If the mod is installed server-side, it will make clients think they're OP. This allows players with [appropriate 
 permissions](#permissions) to place operator blocks and access the gamemode switcher menu.
+* The execute command includes another condition: `/execute if permission <entity> <permission>` to allow datapacks to
+check permissions (e.g. `/execute if permission @s group.admin run say I am an admin!`) 
 
 ### Client Side
 If the mod is installed on the client the gamemode switcher screen will be adjusted to only show game modes the player 
-has permissions for. Gamemodes can also be switched if the player has access to the command, but isn't OP (useful for 
-spigot based servers)!
+has permission for. Gamemodes can also be switched if the player has access to the command, but isn't OP (useful for 
+spigot-based servers)!
+
 ![Gamemode Switcher Screen](/assets/gamemode-switcher-screen.png)
