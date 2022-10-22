@@ -3,7 +3,7 @@
 This mod adds permission checks into vanilla, to allow for full permission customization.
 
 * You need to have a permissions mod installed. (e.g. [LuckPerms](https://luckperms.net))
-  (Any permission provider mod that supports [vanilla-permissions-api](https://github.com/lucko/vanilla-permissions-api) is also supported.)
+  (Any permission provider mod that supports [fabric-permissions-api](https://github.com/lucko/fabric-permissions-api) is also supported.)
 ## Permissions
 | Permission                                                                 	| Description                                                                     	 |
 |----------------------------------------------------------------------------	|-----------------------------------------------------------------------------------|

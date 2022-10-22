@@ -3,9 +3,9 @@ package me.drex.vanillapermissions.mc119.mixin.bypass.player_limit;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.mojang.authlib.GameProfile;
 import me.drex.vanillapermissions.Constants;
-import me.drex.vanillapermissions.event.permission.OfflinePermissions;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.dedicated.DedicatedPlayerList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,7 +26,7 @@ public abstract class DedicatedPlayerListMixin {
             )
     )
     public boolean vanillaPermissions_addBypassPlayerLimitPermission(boolean original, GameProfile gameProfile) {
-       return OfflinePermissions.check(gameProfile, Constants.BYPASS_PLAYER_LIMIT, original).join();
+       return Permissions.check(gameProfile, Constants.BYPASS_PLAYER_LIMIT, original).join();
     }
 
 }

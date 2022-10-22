@@ -2,8 +2,6 @@ package me.drex.vanillapermissions;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
-import me.drex.vanillapermissions.compat.LuckPermsProvider;
-import me.drex.vanillapermissions.compat.PermissionProvider;
 import me.drex.vanillapermissions.event.CommandCallback;
 import me.drex.vanillapermissions.mixin.CommandNodeAccessor;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -28,7 +26,6 @@ public class VanillaPermissionsMod implements DedicatedServerModInitializer {
     public static final String MOD_ID = "vanilla-permissions";
     private static final Logger LOGGER = LogManager.getLogger();
     public static final ResourceLocation MODIFY_VANILLA_PERMISSIONS_PHASE = new ResourceLocation(MOD_ID, "modify_vanilla_permissions");
-    public static final PermissionProvider[] PERMISSION_PROVIDERS = new PermissionProvider[]{LuckPermsProvider.INSTANCE};
 
     @Override
     public void onInitializeServer() {
@@ -38,9 +35,6 @@ public class VanillaPermissionsMod implements DedicatedServerModInitializer {
             }
             LOGGER.info("Loaded Fabric Permissions");
         });
-        for (PermissionProvider provider : PERMISSION_PROVIDERS) {
-            if (FabricLoader.getInstance().isModLoaded(provider.modId())) provider.load();
-        }
     }
 
     public static boolean isMinecraftVersionPresent(String versionPredicate) {

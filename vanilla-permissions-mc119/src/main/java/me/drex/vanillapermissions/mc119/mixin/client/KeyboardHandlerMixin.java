@@ -7,8 +7,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Slice;
 
-import static me.drex.vanillapermissions.mc119.VanillaPermissionsMod1_19.hasCommandPermission;
-
 @Mixin(KeyboardHandler.class)
 public abstract class KeyboardHandlerMixin {
 

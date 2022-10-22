@@ -7,9 +7,6 @@ import net.minecraft.world.level.block.Block;
 
 public class Constants {
 
-    public static final CharSequence DELIMITER = ".";
-    private static final String PREFIX = ResourceLocation.DEFAULT_NAMESPACE;
-
     public static final String ADMIN_BROADCAST_RECEIVE = permission("adminbroadcast.receive");
     public static final String BYPASS_SPAWN_PROTECTION = permission("bypass.spawn-protection");
     public static final String BYPASS_FORCE_GAMEMODE = permission("bypass.force-gamemode");
@@ -31,11 +28,11 @@ public class Constants {
     public static final String SELECTOR = permission("selector");
 
     protected static String permission(String permission) {
-        return build(PREFIX, permission);
+        return build(ResourceLocation.DEFAULT_NAMESPACE, permission);
     }
 
     public static String build(String... parts) {
-        return String.join(DELIMITER, parts);
+        return String.join(".", parts);
     }
 
     public static String item(Item item) {

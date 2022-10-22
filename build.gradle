@@ -42,9 +42,6 @@ allprojects {
 
         modImplementation "me.lucko:fabric-permissions-api:${rootProject.fabric_permissions_version}"
         modImplementation "com.github.Fallen-Breath:conditional-mixin:${rootProject.conditional_mixin_version}"
-
-        modImplementation "net.luckperms:api:${rootProject.luckperms_version}"
-
     }
 
 
