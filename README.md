@@ -37,8 +37,4 @@ permissions](#permissions) to place operator blocks and access the gamemode swit
 check permissions (e.g. `/execute if permission @s group.admin run say I am an admin!`) 
 
 ### Client Side
-If the mod is installed on the client the gamemode switcher screen will be adjusted to only show game modes the player 
-has permission for. Gamemodes can also be switched if the player has access to the command, but isn't OP (useful for 
-spigot-based servers)!
-
-![Gamemode Switcher Screen](/assets/gamemode-switcher-screen.png)
+If the mod is installed on the client, the gamemode switcher can also be accessed, if the player has access to the command, but isn't OP (useful for spigot-based servers)!
