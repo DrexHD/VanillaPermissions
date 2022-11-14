@@ -26,7 +26,7 @@ public abstract class DedicatedPlayerListMixin {
             )
     )
     public boolean vanillaPermissions_addBypassPlayerLimitPermission(boolean original, GameProfile gameProfile) {
-       return Permissions.check(gameProfile, Constants.BYPASS_PLAYER_LIMIT, original).join();
+       return original || Permissions.check(gameProfile, Constants.BYPASS_PLAYER_LIMIT).join();
     }
 
 }
