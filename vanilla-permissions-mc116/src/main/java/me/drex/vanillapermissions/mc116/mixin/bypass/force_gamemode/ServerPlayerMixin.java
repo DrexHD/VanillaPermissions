@@ -2,7 +2,7 @@ package me.drex.vanillapermissions.mc116.mixin.bypass.force_gamemode;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -28,7 +28,7 @@ public abstract class ServerPlayerMixin {
             )
     )
     public boolean fabricpermissions_addDefaultGameModeOverridePermission(MinecraftServer minecraftServer, Operation<Boolean> original) {
-        if (Permissions.check((ServerPlayer) (Object) this, Constants.BYPASS_FORCE_GAMEMODE)) {
+        if (Permissions.check((ServerPlayer) (Object) this, Permission.BYPASS_FORCE_GAMEMODE)) {
             return false;
         } else {
             return original.call(minecraftServer);

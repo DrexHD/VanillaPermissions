@@ -1,7 +1,8 @@
 package me.drex.vanillapermissions.mc114.mixin.operator_blocks;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
+import me.drex.vanillapermissions.util.RegistryProvider;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -28,7 +29,7 @@ public abstract class StructureBlockEntityMixin {
             )
     )
     public boolean fabricpermissions_addCommandBlockEditPermission(boolean original, Player player) {
-        return Permissions.check(player, Constants.OPERATOR_BLOCK_VIEW.formatted(Constants.block(Blocks.STRUCTURE_BLOCK)), original);
+        return Permissions.check(player, Permission.OPERATOR_BLOCK_VIEW.formatted(RegistryProvider.blockKey(Blocks.STRUCTURE_BLOCK).getPath()), original);
     }
 
 }

@@ -1,7 +1,8 @@
 package me.drex.vanillapermissions.mc119.mixin.bypass.move_speed;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
+import me.drex.vanillapermissions.util.RegistryProvider;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -33,7 +34,7 @@ public abstract class ServerGamePacketListenerImplMixin {
             )
     )
     public boolean vanillaPermissions_addBypassMoveSpeedPlayerPermission(boolean original) {
-        return Permissions.check(this.player, Constants.BYPASS_MOVE_SPEED_PLAYER, original);
+        return Permissions.check(this.player, Permission.BYPASS_MOVE_SPEED_PLAYER, original);
     }
 
     @ModifyExpressionValue(
@@ -44,7 +45,7 @@ public abstract class ServerGamePacketListenerImplMixin {
             )
     )
     public boolean vanillaPermissions_addBypassMoveSpeedVehiclePermission(boolean original) {
-        ResourceLocation identifier = Registry.ENTITY_TYPE.getKey(this.player.getRootVehicle().getType());
-        return Permissions.check(this.player, Constants.BYPASS_MOVE_SPEED_VEHICLE.formatted(identifier.getNamespace(), identifier.getPath()), original);
+        ResourceLocation identifier = RegistryProvider.entityKey(this.player.getRootVehicle().getType());
+        return Permissions.check(this.player, Permission.BYPASS_MOVE_SPEED_VEHICLE.formatted(identifier.getNamespace(), identifier.getPath()), original);
     }
 }

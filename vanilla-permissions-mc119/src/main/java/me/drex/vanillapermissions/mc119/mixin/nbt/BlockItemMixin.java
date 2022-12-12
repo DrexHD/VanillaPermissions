@@ -1,7 +1,7 @@
 package me.drex.vanillapermissions.mc119.mixin.nbt;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -28,7 +28,7 @@ public abstract class BlockItemMixin {
             )
     )
     private static boolean vanillaPermissions_addNbtLoadBlockPermission(boolean original, Level level, Player player) {
-        return Permissions.check(player, Constants.NBT_LOAD_BLOCK, original);
+        return Permissions.check(player, Permission.NBT_LOAD_BLOCK, original);
     }
 
 }

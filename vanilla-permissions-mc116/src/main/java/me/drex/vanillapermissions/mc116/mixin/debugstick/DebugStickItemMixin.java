@@ -1,12 +1,12 @@
 package me.drex.vanillapermissions.mc116.mixin.debugstick;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
+import me.drex.vanillapermissions.util.RegistryProvider;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DebugStickItem;
@@ -37,8 +37,8 @@ public abstract class DebugStickItemMixin {
             )
     )
     public boolean fabricpermissions_addDebugStickUsePermission(boolean original, Player player, BlockState state) {
-        ResourceLocation identifier = Registry.BLOCK.getKey(state.getBlock());
-        return Permissions.check(player, Constants.DEBUG_STICK_USE.formatted(Constants.item(Items.DEBUG_STICK), identifier.getNamespace(), identifier.getPath()), original);
+        ResourceLocation identifier = RegistryProvider.blockKey(state.getBlock());
+        return Permissions.check(player, Permission.DEBUG_STICK_USE.formatted(RegistryProvider.itemKey(Items.DEBUG_STICK).getPath(), identifier.getNamespace(), identifier.getPath()), original);
     }
 
 }

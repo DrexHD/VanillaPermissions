@@ -1,7 +1,7 @@
 package me.drex.vanillapermissions.mc119.mixin.nbt;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -30,7 +30,7 @@ public abstract class ServerGamePacketListenerImplMixin {
             )
     )
     public boolean vanillaPermissions_addNbtQueryEntityPermission(boolean original) {
-        return Permissions.check(this.player, Constants.NBT_QUERY_ENTITY, original);
+        return Permissions.check(this.player, Permission.NBT_QUERY_ENTITY, original);
     }
 
     @ModifyExpressionValue(
@@ -41,7 +41,7 @@ public abstract class ServerGamePacketListenerImplMixin {
             )
     )
     public boolean vanillaPermissions_addNbtQueryBlockPermission(boolean original) {
-        return Permissions.check(this.player, Constants.NBT_QUERY_BLOCK, original);
+        return Permissions.check(this.player, Permission.NBT_QUERY_BLOCK, original);
     }
 
 }

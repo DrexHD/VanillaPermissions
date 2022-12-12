@@ -1,7 +1,7 @@
 package me.drex.vanillapermissions.mc119.mixin.selector;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -27,7 +27,7 @@ public abstract class EntitySelectorMixin {
             )
     )
     public boolean vanillaPermissions_addSelectorPermission(boolean original, CommandSourceStack source) {
-        return Permissions.check(source, Constants.SELECTOR, original);
+        return Permissions.check(source, Permission.SELECTOR, original);
     }
 
 }

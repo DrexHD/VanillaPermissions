@@ -1,7 +1,7 @@
 package me.drex.vanillapermissions.mc119.mixin.adminbroadcast;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -26,7 +26,7 @@ public abstract class CommandSourceStackMixin {
             )
     )
     public boolean vanillaPermissions_addAdminBroadcastReceivePermission(boolean original) {
-        return Permissions.check((CommandSourceStack) (Object) this, Constants.ADMIN_BROADCAST_RECEIVE, original);
+        return Permissions.check((CommandSourceStack) (Object) this, Permission.ADMIN_BROADCAST_RECEIVE, original);
     }
 
 }

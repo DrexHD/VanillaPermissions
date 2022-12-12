@@ -2,7 +2,7 @@ package me.drex.vanillapermissions.mc119.mixin.bypass.player_limit;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.mojang.authlib.GameProfile;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -26,7 +26,7 @@ public abstract class DedicatedPlayerListMixin {
             )
     )
     public boolean vanillaPermissions_addBypassPlayerLimitPermission(boolean original, GameProfile gameProfile) {
-       return original || Permissions.check(gameProfile, Constants.BYPASS_PLAYER_LIMIT).join();
+       return original || Permissions.check(gameProfile, Permission.BYPASS_PLAYER_LIMIT).join();
     }
 
 }

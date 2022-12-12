@@ -1,7 +1,7 @@
 package me.drex.vanillapermissions.mc119.mixin.bypass.chat_speed;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -31,7 +31,7 @@ public abstract class ServerGamePacketListenerImplMixin {
             )
     )
     public boolean vanillaPermissions_addBypassChatSpeedPermission(boolean original) {
-        return Permissions.check(this.player, Constants.BYPASS_CHAT_SPEED, original);
+        return Permissions.check(this.player, Permission.BYPASS_CHAT_SPEED, original);
     }
 
 }

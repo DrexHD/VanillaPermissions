@@ -2,7 +2,7 @@ package me.drex.vanillapermissions.mc116.mixin.bypass.force_gamemode;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -29,7 +29,7 @@ public abstract class DefaultGameModeCommandsMixin {
             )
     )
     private static void fabricpermissions_addDefaultGameModeOverridePermission(ServerPlayer player, GameType gameType, Operation<Void> original) {
-        if (!Permissions.check(player, Constants.BYPASS_FORCE_GAMEMODE)) {
+        if (!Permissions.check(player, Permission.BYPASS_FORCE_GAMEMODE)) {
             original.call(player, gameType);
         }
     }

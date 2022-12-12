@@ -1,11 +1,8 @@
-package me.drex.vanillapermissions;
+package me.drex.vanillapermissions.util;
 
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 
-public class Constants {
+public class Permission {
 
     public static final String ADMIN_BROADCAST_RECEIVE = permission("adminbroadcast.receive");
     public static final String BYPASS_SPAWN_PROTECTION = permission("bypass.spawn-protection");
@@ -35,11 +32,4 @@ public class Constants {
         return String.join(".", parts);
     }
 
-    public static String item(Item item) {
-        return Registry.ITEM.getKey(item).getPath();
-    }
-
-    public static String block(Block block) {
-        return Registry.BLOCK.getKey(block).getPath();
-    }
 }

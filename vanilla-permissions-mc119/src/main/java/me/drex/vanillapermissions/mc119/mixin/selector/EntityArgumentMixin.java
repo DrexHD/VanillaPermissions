@@ -2,7 +2,7 @@ package me.drex.vanillapermissions.mc119.mixin.selector;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.mojang.brigadier.context.CommandContext;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -28,7 +28,7 @@ public abstract class EntityArgumentMixin {
             )
     )
     public boolean vanillaPermissions_addSelectorPermission(boolean original, CommandContext<SharedSuggestionProvider> context) {
-        return Permissions.check(context.getSource(), Constants.SELECTOR, original);
+        return Permissions.check(context.getSource(), Permission.SELECTOR, original);
     }
 
 }

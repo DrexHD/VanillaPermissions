@@ -2,7 +2,7 @@ package me.drex.vanillapermissions.mc119.mixin.bypass.whitelist;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.mojang.authlib.GameProfile;
-import me.drex.vanillapermissions.Constants;
+import me.drex.vanillapermissions.util.Permission;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -24,7 +24,7 @@ public abstract class DedicatedPlayerListMixin {
             at = @At("RETURN")
     )
     public boolean vanillaPermissions_addBypassWhitelistPermission(boolean original, GameProfile gameProfile) {
-        return original || Permissions.check(gameProfile, Constants.BYPASS_WHITELIST).join();
+        return original || Permissions.check(gameProfile, Permission.BYPASS_WHITELIST).join();
     }
 
 }

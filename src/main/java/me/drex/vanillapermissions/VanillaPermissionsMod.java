@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
 import me.drex.vanillapermissions.event.CommandCallback;
 import me.drex.vanillapermissions.mixin.CommandNodeAccessor;
+import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.util.TriState;
@@ -19,7 +20,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import static me.drex.vanillapermissions.Constants.build;
+import static me.drex.vanillapermissions.util.Permission.build;
 
 public class VanillaPermissionsMod implements DedicatedServerModInitializer {
 
@@ -61,7 +62,7 @@ public class VanillaPermissionsMod implements DedicatedServerModInitializer {
     private Predicate<CommandSourceStack> createPredicate(String name, Predicate<CommandSourceStack> fallback) {
         return source -> {
             try {
-                TriState triState = Permissions.getPermissionValue(source, Constants.COMMAND.formatted(name));
+                TriState triState = Permissions.getPermissionValue(source, Permission.COMMAND.formatted(name));
                 return triState.orElseGet(() -> fallback.test(source));
             } catch (Throwable ignored) {
                 // Fallback if permission check failed
