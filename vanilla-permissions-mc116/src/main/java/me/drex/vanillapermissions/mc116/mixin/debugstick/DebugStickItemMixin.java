@@ -36,7 +36,7 @@ public abstract class DebugStickItemMixin {
                     target = "Lnet/minecraft/world/entity/player/Player;canUseGameMasterBlocks()Z"
             )
     )
-    public boolean fabricpermissions_addDebugStickUsePermission(boolean original, Player player, BlockState state) {
+    public boolean vanillapermissions_addDebugStickUsePermission(boolean original, Player player, BlockState state) {
         ResourceLocation identifier = RegistryProvider.blockKey(state.getBlock());
         return Permissions.check(player, Permission.DEBUG_STICK_USE.formatted(RegistryProvider.itemKey(Items.DEBUG_STICK).getPath(), identifier.getNamespace(), identifier.getPath()), original);
     }
