@@ -8,6 +8,8 @@
   },
   "mixins": [
     "CommandNodeAccessor",
+    "CommandSourceStackAccessor",
+    "EntityAccessor",
     "ExecuteCommandMixin"
   ]
 }

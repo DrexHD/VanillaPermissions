@@ -1,6 +1,6 @@
 package me.drex.vanillapermissions.util;
 
-import net.minecraft.DetectedVersion;
+import net.minecraft.SharedConstants;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
  */
 public class RegistryProvider {
 
-    public static final boolean AFTER22W45A = DetectedVersion.BUILT_IN.getWorldVersion() >= 3208;
+    public static final boolean AFTER22W45A = SharedConstants.WORLD_VERSION >= 3208;
     public static final String REGISTRY = "net.minecraft.class_2378";
     public static final String BUILTIN_REGISTRIES = "net.minecraft.class_7923";
     public static final String GET_KEY_INTERMEDIARY = "method_10221";
