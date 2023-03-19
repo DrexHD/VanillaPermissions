@@ -27,7 +27,7 @@
   ],
   "accessWidener": "vanilla-permissions-mc119.accesswidener",
   "depends": {
-    "minecraft": ">=1.14 <=1.19.4",
+    "minecraft": ">=1.14",
     "fabricloader": ">=0.14.13"
   }
 }

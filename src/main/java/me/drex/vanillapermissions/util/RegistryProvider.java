@@ -1,6 +1,5 @@
 package me.drex.vanillapermissions.util;
 
-import net.minecraft.SharedConstants;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -10,13 +9,15 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import static me.drex.vanillapermissions.VanillaPermissionsMod.isMinecraftVersionPresent;
+
 /**
  * In 22w45a (1.19.3 snapshot) Mojang made some changes to registries.
  * This class exists to provide a way to access registries
  */
 public class RegistryProvider {
 
-    public static final boolean AFTER22W45A = SharedConstants.WORLD_VERSION >= 3208;
+    public static final boolean AFTER1_19_3 = isMinecraftVersionPresent(">=1.19.3");
     public static final String REGISTRY = "net.minecraft.class_2378";
     public static final String BUILTIN_REGISTRIES = "net.minecraft.class_7923";
     public static final String GET_KEY_INTERMEDIARY = "method_10221";
@@ -45,8 +46,8 @@ public class RegistryProvider {
 
     private static Object registryObject(String oldFieldName, String newFieldName) {
         try {
-            Class<?> clazz = Class.forName(AFTER22W45A ? BUILTIN_REGISTRIES : REGISTRY);
-            Field field = clazz.getField(AFTER22W45A ? newFieldName : oldFieldName);
+            Class<?> clazz = Class.forName(AFTER1_19_3 ? BUILTIN_REGISTRIES : REGISTRY);
+            Field field = clazz.getField(AFTER1_19_3 ? newFieldName : oldFieldName);
             return field.get(null);
         } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
