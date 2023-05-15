@@ -15,13 +15,13 @@ import java.util.Optional;
 public abstract class GameModeSwitcherScreenMixin {
 
     @ModifyExpressionValue(
-            method = "switchToHoveredGameMode(Lnet/minecraft/client/Minecraft;Ljava/util/Optional;)V",
+            method = "switchToHoveredGameMode(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/debug/GameModeSwitcherScreen$GameModeIcon;)V",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/player/LocalPlayer;hasPermissions(I)Z"
             )
     )
-    private static boolean hasCommandAccess(boolean original, Minecraft minecraft, Optional<GameModeSwitcherScreen.GameModeIcon> optional) {
+    private static boolean hasCommandAccess(boolean original, Minecraft minecraft, GameModeSwitcherScreen.GameModeIcon icon) {
         return true;
     }
 
