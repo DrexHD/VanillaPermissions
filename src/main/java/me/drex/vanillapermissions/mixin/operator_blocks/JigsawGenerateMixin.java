@@ -3,7 +3,7 @@ package me.drex.vanillapermissions.mixin.operator_blocks;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.level.block.Blocks;
@@ -24,7 +24,7 @@ public abstract class JigsawGenerateMixin {
             )
     )
     public boolean vanillaPermissions_addJigsawBlockEditPermission2(boolean original) {
-        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(BuiltInRegistries.BLOCK.getKey(Blocks.JIGSAW).getPath()), original);
+        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(Registry.BLOCK.getKey(Blocks.JIGSAW).getPath()), original);
     }
 
 }

@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.drex.vanillapermissions.util.Permission;
 import me.drex.vanillapermissions.util.RegistryProvider;
 import me.lucko.fabric.api.permissions.v0.Permissions;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.item.Items;
@@ -26,7 +26,7 @@ public abstract class ServerGamePacketListenerImplMixin {
             )
     )
     public boolean vanillaPermissions_addCommandBlockEditPermission(boolean original) {
-        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(BuiltInRegistries.BLOCK.getKey(Blocks.COMMAND_BLOCK).getPath()), original);
+        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(Registry.BLOCK.getKey(Blocks.COMMAND_BLOCK).getPath()), original);
     }
 
     @ModifyExpressionValue(
@@ -37,7 +37,7 @@ public abstract class ServerGamePacketListenerImplMixin {
             )
     )
     public boolean vanillaPermissions_addJigsawBlockEditPermission(boolean original) {
-        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(BuiltInRegistries.BLOCK.getKey(Blocks.JIGSAW).getPath()), original);
+        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(Registry.BLOCK.getKey(Blocks.JIGSAW).getPath()), original);
     }
 
     @ModifyExpressionValue(
@@ -48,7 +48,7 @@ public abstract class ServerGamePacketListenerImplMixin {
             )
     )
     public boolean vanillaPermissions_addStructureBlockEditPermission(boolean original) {
-        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(BuiltInRegistries.BLOCK.getKey(Blocks.STRUCTURE_BLOCK).getPath()), original);
+        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(Registry.BLOCK.getKey(Blocks.STRUCTURE_BLOCK).getPath()), original);
     }
 
     @ModifyExpressionValue(

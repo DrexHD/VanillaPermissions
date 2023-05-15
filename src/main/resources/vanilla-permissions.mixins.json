@@ -20,7 +20,6 @@
     "bypass.player_limit.DedicatedPlayerListMixin",
     "bypass.spawn_protection.DedicatedServerMixin",
     "bypass.whitelist.DedicatedPlayerListMixin",
-    "command.GameModeCommandMixin",
     "debugstick.DebugStickItemMixin",
     "nbt.BlockItemMixin",
     "nbt.EntityTypeMixin",

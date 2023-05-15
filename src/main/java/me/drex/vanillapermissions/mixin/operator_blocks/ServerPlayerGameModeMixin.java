@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerPlayerGameMode;
@@ -33,6 +33,6 @@ public abstract class ServerPlayerGameModeMixin {
     )
     public boolean vanillaPermissions_addOperatorBlockBreakPermission(boolean original, BlockPos pos) {
         Block block = this.level.getBlockState(pos).getBlock();
-        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_BREAK.formatted(BuiltInRegistries.BLOCK.getKey(block).getPath()), original);
+        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_BREAK.formatted(Registry.BLOCK.getKey(block).getPath()), original);
     }
 }
