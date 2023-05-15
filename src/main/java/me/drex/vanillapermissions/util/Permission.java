@@ -18,10 +18,10 @@ public class Permission {
     public static final String NBT_QUERY_BLOCK = permission("nbt.query.block");
     public static final String NBT_LOAD_ENTITY = permission("nbt.load.entity");
     public static final String NBT_LOAD_BLOCK = permission("nbt.load.block");
-    public static final String OPERATOR_BLOCK_PLACE = permission("%s.place");
-    public static final String OPERATOR_BLOCK_VIEW = permission("%s.view");
-    public static final String OPERATOR_BLOCK_EDIT = permission("%s.edit");
-    public static final String OPERATOR_BLOCK_BREAK = permission("%s.break");
+    public static final String OPERATOR_BLOCK_PLACE = permission("operator_block.%s.place");
+    public static final String OPERATOR_BLOCK_VIEW = permission("operator_block.%s.view");
+    public static final String OPERATOR_BLOCK_EDIT = permission("operator_block.%s.edit");
+    public static final String OPERATOR_BLOCK_BREAK = permission("operator_block.%s.break");
     public static final String SELECTOR = permission("selector");
 
     protected static String permission(String permission) {

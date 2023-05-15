@@ -10,6 +10,34 @@
     "CommandNodeAccessor",
     "CommandSourceStackAccessor",
     "EntityAccessor",
-    "ExecuteCommandMixin"
+    "ExecuteCommandMixin",
+    "PlayerListMixin",
+    "adminbroadcast.CommandSourceStackMixin",
+    "bypass.chat_speed.ServerGamePacketListenerImplMixin",
+    "bypass.force_gamemode.DefaultGameModeCommandsMixin",
+    "bypass.force_gamemode.ServerPlayerMixin",
+    "bypass.move_speed.ServerGamePacketListenerImplMixin",
+    "bypass.player_limit.DedicatedPlayerListMixin",
+    "bypass.spawn_protection.DedicatedServerMixin",
+    "bypass.whitelist.DedicatedPlayerListMixin",
+    "command.GameModeCommandMixin",
+    "debugstick.DebugStickItemMixin",
+    "nbt.BlockItemMixin",
+    "nbt.EntityTypeMixin",
+    "nbt.ServerGamePacketListenerImplMixin",
+    "operator_blocks.BaseCommandBlockMixin",
+    "operator_blocks.GameMasterBlockItemMixin",
+    "operator_blocks.JigsawGenerateMixin",
+    "operator_blocks.OperatorBlockMixin",
+    "operator_blocks.ServerGamePacketListenerImplMixin",
+    "operator_blocks.ServerPlayerGameModeMixin",
+    "operator_blocks.SetJigsawBlockMixin",
+    "operator_blocks.StructureBlockEntityMixin",
+    "selector.EntityArgumentMixin",
+    "selector.EntitySelectorMixin"
+  ],
+  "client": [
+    "client.GameModeSwitcherScreenMixin",
+    "client.KeyboardHandlerMixin"
   ]
 }

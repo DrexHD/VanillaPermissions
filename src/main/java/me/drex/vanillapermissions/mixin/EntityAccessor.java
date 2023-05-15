@@ -10,5 +10,4 @@ public interface EntityAccessor {
     @Invoker
     int invokeGetPermissionLevel();
 
-
 }

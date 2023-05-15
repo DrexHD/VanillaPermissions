@@ -1,86 +1,57 @@
 plugins {
-    id 'java'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'maven-publish'
-    id 'fabric-loom' version '1.0-SNAPSHOT' apply false
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
-version = project.mod_version
+version = "${project.mod_version}+${project.minecraft_version}"
 group = project.maven_group
 
-allprojects {
-    apply plugin: "maven-publish"
-    apply plugin: "fabric-loom"
-
-    java {
-        withSourcesJar()
-    }
-
-    tasks.withType(JavaCompile).configureEach {
-        it.options.encoding = "UTF-8"
-        it.options.release.set(17)
-    }
-
-    version = rootProject.version
-    group = rootProject.group
-
-    repositories {
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-        maven { url 'https://jitpack.io' } // MixinExtras
-        mavenCentral()
-    }
-
-    dependencies {
-        modImplementation("net.fabricmc:fabric-loader:${rootProject.loader_version}")
-        mappings loom.officialMojangMappings()
-
-        implementation "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}"
-        annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
-
-        modImplementation "me.lucko:fabric-permissions-api:${rootProject.fabric_permissions_version}"
-        modImplementation "com.github.Fallen-Breath:conditional-mixin:${rootProject.conditional_mixin_version}"
-    }
-
-
-    processResources {
-        inputs.property "version", version
-
-        filesMatching("fabric.mod.json") {
-            expand "version": version
-        }
-    }
-}
-
-subprojects {
-    dependencies {
-        implementation(rootProject) {
-            exclude group: "net.fabricmc", module: "fabric-loader" // prevent duplicate fabric-loader on run
-        }
-    }
-
-}
-
-subprojects.each {
-	remapJar.dependsOn("${it.path}:remapJar")
+repositories {
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
-	// Common code version
-	minecraft("com.mojang:minecraft:${rootProject.minecraft_version}")
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    implementation include("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
+    implementation include("com.github.LlamaLad7:MixinExtras:${project.mixin_extras_version}")
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:${project.mixin_extras_version}")
 
-    modImplementation include("me.lucko:fabric-permissions-api:${rootProject.fabric_permissions_version}")
+    // Fabric API
+    include(modImplementation(fabricApi.module("fabric-command-api-v2", project.fabric_version)))
+    // Mod dependencies
+    modImplementation include("me.lucko:fabric-permissions-api:${project.fabric_permissions_version}")
 
-    modImplementation include("com.github.Fallen-Breath:conditional-mixin:${rootProject.conditional_mixin_version}")
+    // Required by luckperms in local test environment
+    Set<String> apiModules = [
+            "fabric-lifecycle-events-v1",
+            "fabric-networking-api-v1"
+    ]
+    apiModules.forEach {
+        modRuntimeOnly(fabricApi.module(it, project.fabric_version))
+    }
+}
 
-	subprojects.each {
-		include project("${it.name}:")
-	}
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release.set(17)
+}
+
+java {
+    withSourcesJar()
 }
 
 loom {
@@ -88,7 +59,20 @@ loom {
 }
 
 jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}" }
+    }
+}
+
+// configure the maven publication
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+    }
 }

@@ -2,11 +2,12 @@ package me.drex.vanillapermissions;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
-import me.drex.vanillapermissions.event.CommandCallback;
 import me.drex.vanillapermissions.mixin.CommandNodeAccessor;
 import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.fabricmc.api.DedicatedServerModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.util.TriState;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
@@ -30,7 +31,8 @@ public class VanillaPermissionsMod implements DedicatedServerModInitializer {
 
     @Override
     public void onInitializeServer() {
-        CommandCallback.EVENT.register(dispatcher -> {
+        CommandRegistrationCallback.EVENT.addPhaseOrdering(VanillaPermissionsMod.MODIFY_VANILLA_PERMISSIONS_PHASE, Event.DEFAULT_PHASE);
+        CommandRegistrationCallback.EVENT.register(VanillaPermissionsMod.MODIFY_VANILLA_PERMISSIONS_PHASE, (dispatcher, registryAccess, environment) -> {
             for (CommandNode<CommandSourceStack> node : dispatcher.getRoot().getChildren()) {
                 alterCommandChildNode(dispatcher, node, node.getRequirement());
             }

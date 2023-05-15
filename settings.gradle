@@ -4,15 +4,7 @@ pluginManagement {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
         }
+        mavenCentral()
         gradlePluginPortal()
     }
 }
-
-rootProject.name = "vanilla-permissions"
-
-include "vanilla-permissions-mc114"
-include "vanilla-permissions-mc115"
-include "vanilla-permissions-mc116"
-include "vanilla-permissions-mc117"
-include "vanilla-permissions-mc118"
-include "vanilla-permissions-mc119"
