@@ -21,7 +21,10 @@ public abstract class ServerPlayerMixin {
             )
     )
     public GameType vanillaPermissions_addDefaultGameModeOverridePermission(MinecraftServer minecraftServer, Operation<GameType> original) {
-        if (Permissions.check((ServerPlayer) (Object) this, Permission.BYPASS_FORCE_GAMEMODE)) {
+        // This used to be "Permissions.check((ServerPlayer) (Object) this, Permission.BYPASS_FORCE_GAMEMODE)", but it
+        // caused problems with luckperms, probably because we are checking permissions to early. If this causes issues
+        // for anyone, please let me know, so we can get it resolved!
+        if (Permissions.check(((ServerPlayer) (Object) this).getUUID(), Permission.BYPASS_FORCE_GAMEMODE, false).join()) {
             return null;
         } else {
             return original.call(minecraftServer);
