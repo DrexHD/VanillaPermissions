@@ -1,0 +1,40 @@
+name: release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*.*.*-1.**'
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Grant execute permission to gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: Set up Environment Variables
+        run: |
+          echo "MINECRAFT_VERSION="$(grep 'minecraft_version' gradle.properties | cut -f2- -d=)"" >> $GITHUB_ENV
+          echo "MOD_VERSION="$(grep 'mod_version' gradle.properties | cut -f2- -d=)"" >> $GITHUB_ENV
+      - name: Install changelog parser
+        uses: taiki-e/install-action@parse-changelog
+      - name: Parse changelog
+        run: parse-changelog CHANGELOG.md ${{ env.MOD_VERSION }} > changes.md
+      - uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-dependencies: |
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          changelog-file: changes.md
+          name: Vanilla Permissions ${{ env.MOD_VERSION }} for ${{ env.MINECRAFT_VERSION }}
+          files: build/libs/!(*-@(dev|sources|shadow)).jar
