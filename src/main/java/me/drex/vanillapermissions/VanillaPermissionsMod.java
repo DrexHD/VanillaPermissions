@@ -9,16 +9,11 @@ import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.util.TriState;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
-import net.fabricmc.loader.api.VersionParsingException;
-import net.fabricmc.loader.api.metadata.version.VersionPredicate;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import static me.drex.vanillapermissions.util.Permission.build;
@@ -38,17 +33,6 @@ public class VanillaPermissionsMod implements DedicatedServerModInitializer {
             }
             LOGGER.info("Loaded Fabric Permissions");
         });
-    }
-
-    public static boolean isMinecraftVersionPresent(String versionPredicate) {
-        try {
-            Optional<ModContainer> optional = FabricLoader.getInstance().getModContainer("minecraft");
-            ModContainer minecraft = optional.orElseThrow();
-            return VersionPredicate.parse(versionPredicate).test(minecraft.getMetadata().getVersion());
-        } catch (VersionParsingException e) {
-            LOGGER.error("An error occurred while parsing minecraft version predicate", e);
-            return false;
-        }
     }
 
     @SuppressWarnings("unchecked")

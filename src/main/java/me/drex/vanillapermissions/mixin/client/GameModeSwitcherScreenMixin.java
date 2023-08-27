@@ -8,8 +8,6 @@ import net.minecraft.client.gui.screens.debug.GameModeSwitcherScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.Optional;
-
 @Environment(EnvType.CLIENT)
 @Mixin(GameModeSwitcherScreen.class)
 public abstract class GameModeSwitcherScreenMixin {

@@ -2,7 +2,6 @@ package me.drex.vanillapermissions.mixin.operator_blocks;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.drex.vanillapermissions.util.Permission;
-import me.drex.vanillapermissions.util.RegistryProvider;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
@@ -59,7 +58,7 @@ public abstract class ServerGamePacketListenerImplMixin {
             )
     )
     public boolean vanillaPermissions_addCommandBlockMinecartEditPermission(boolean original) {
-        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(RegistryProvider.itemKey(Items.COMMAND_BLOCK_MINECART).getPath()), original);
+        return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(BuiltInRegistries.ITEM.getKey(Items.COMMAND_BLOCK_MINECART).getPath()), original);
     }
 
 }
