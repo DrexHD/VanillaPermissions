@@ -16,6 +16,8 @@
     "bypass.chat_speed.ServerGamePacketListenerImplMixin",
     "bypass.force_gamemode.DefaultGameModeCommandsMixin",
     "bypass.force_gamemode.ServerPlayerMixin",
+    "bypass.hunger.FoodDataMixin",
+    "bypass.hunger.PlayerMixin",
     "bypass.move_speed.ServerGamePacketListenerImplMixin",
     "bypass.player_limit.DedicatedPlayerListMixin",
     "bypass.spawn_protection.DedicatedServerMixin",
