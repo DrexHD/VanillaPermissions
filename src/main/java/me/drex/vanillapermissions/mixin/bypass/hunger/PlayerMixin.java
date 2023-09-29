@@ -10,13 +10,15 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Player.class)
 public class PlayerMixin {
+
     @ModifyExpressionValue(
             method = "aiStep",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getDifficulty()Lnet/minecraft/world/Difficulty;")
     )
-    private Difficulty modifyDifficulty(Difficulty difficulty) {
+    private Difficulty vanillaPermissions_addBypassHungerPermission(Difficulty difficulty) {
         return Permissions.check((Player)(Object)this, Permission.BYPASS_HUNGER)
                 ? Difficulty.PEACEFUL
                 : difficulty;
     }
+
 }

@@ -11,13 +11,15 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(FoodData.class)
 public class FoodDataMixin {
+
     @ModifyVariable(
             method = "tick",
             at = @At("LOAD")
     )
-    private Difficulty modifyDifficulty(Difficulty difficulty, Player player) {
+    private Difficulty vanillaPermissions_addBypassHungerPermission(Difficulty difficulty, Player player) {
         return Permissions.check(player, Permission.BYPASS_HUNGER)
                 ? Difficulty.PEACEFUL
                 : difficulty;
     }
+
 }
