@@ -22,7 +22,7 @@ public abstract class OperatorBlockMixin extends Block {
     }
 
     @ModifyExpressionValue(
-            method = "use",
+            method = "useWithoutItem",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/player/Player;canUseGameMasterBlocks()Z"

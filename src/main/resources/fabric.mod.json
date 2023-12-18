@@ -36,7 +36,7 @@
   ],
   "accessWidener": "vanilla-permissions.accesswidener",
   "depends": {
-    "fabricloader": ">=0.14.9",
+    "fabricloader": ">=0.15.3",
     "fabric-api": "*",
     "fabric-permissions-api-v0": "*",
     "minecraft": ">=1.20.2",
