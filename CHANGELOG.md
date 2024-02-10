@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.3] - 2024-02-10
+### Added
+- Redirector mod compatibility
+
 ## [0.2.2] - 2023-08-27
 ### Removed
 - Multi-version residue

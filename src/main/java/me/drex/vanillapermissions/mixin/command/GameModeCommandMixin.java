@@ -17,7 +17,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.util.Collection;
 import java.util.Collections;
 
-@Mixin(GameModeCommand.class)
+// Very low priority, because we want to be applied before Redirector, which has a default priority of 10
+@Mixin(priority = 5, value = GameModeCommand.class)
 public abstract class GameModeCommandMixin {
 
     @Shadow
