@@ -7,6 +7,7 @@ public class Permission {
     public static final String ADMIN_BROADCAST_RECEIVE = permission("adminbroadcast.receive");
     public static final String BYPASS_SPAWN_PROTECTION = permission("bypass.spawn-protection");
     public static final String BYPASS_FORCE_GAMEMODE = permission("bypass.force-gamemode");
+    public static final String BYPASS_HUNGER = permission("bypass.hunger");
     public static final String BYPASS_MOVE_SPEED_PLAYER = permission("bypass.move-speed.player");
     public static final String BYPASS_MOVE_SPEED_VEHICLE = permission("bypass.move-speed.vehicle.%s.%s");
     public static final String BYPASS_CHAT_SPEED = permission("bypass.chat-speed");

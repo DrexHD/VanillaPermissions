@@ -14,6 +14,7 @@ This mod adds permission checks into vanilla, to allow for full permission custo
 | `minecraft.bypass.move-speed.vehicle.<entity>`                             	                | Bypass "Player moved too fast", while riding an `entity` (e.g `minecraft.boat`) 	 |
 | `minecraft.bypass.chat-speed`                                              	                | Bypass chat kick, when sending messages / commands to quick                     	 |
 | `minecraft.bypass.whitelist`                                               	                | Bypass server whitelist                                                         	 |
+| `minecraft.bypass.hunger`                                              	                    | Bypass hunger                     	                                               |
 | `minecraft.bypass.player-limit`                                            	                | Bypass server player limit                                                      	 |
 | `minecraft.command.<command>`                                              	                | Command permissions, see [commands](#commands) for more information             	 |
 | `minecraft.debug_stick.use.<block>`                                        	                | Use debug stick on `block` (e.g. `minecraft.oak_trapdoor`)                      	 |
