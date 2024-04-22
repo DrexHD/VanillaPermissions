@@ -36,11 +36,9 @@
   ],
   "accessWidener": "vanilla-permissions.accesswidener",
   "depends": {
-    "fabricloader": ">=0.15.6",
-    "fabric-api": "*",
+    "fabricloader": ">=0.15.10",
     "fabric-permissions-api-v0": "*",
-    "minecraft": ">=1.20.5- <1.20.6-",
-    "java": ">=17"
+    "minecraft": ">=1.20.5-rc.3"
   },
   "suggests": {
     "luckperms": "*"
