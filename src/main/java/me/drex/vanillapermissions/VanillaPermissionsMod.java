@@ -22,7 +22,7 @@ public class VanillaPermissionsMod implements DedicatedServerModInitializer {
 
     public static final String MOD_ID = "vanilla-permissions";
     private static final Logger LOGGER = LogManager.getLogger();
-    public static final ResourceLocation MODIFY_VANILLA_PERMISSIONS_PHASE = new ResourceLocation(MOD_ID, "modify_vanilla_permissions");
+    public static final ResourceLocation MODIFY_VANILLA_PERMISSIONS_PHASE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "modify_vanilla_permissions");
 
     @Override
     public void onInitializeServer() {
