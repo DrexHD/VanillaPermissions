@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Debug chart permission
+
 ## [0.2.3] - 2024-02-10
 ### Added
 - Redirector mod compatibility

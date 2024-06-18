@@ -14,6 +14,7 @@ public class Permission {
     public static final String BYPASS_PLAYER_LIMIT = permission("bypass.player-limit");
     public static final String COMMAND = permission("command.%s");
     public static final String DEBUG_STICK_USE = permission("%s.use.%s.%s");
+    public static final String DEBUG_CHART = permission("debug_chart");
     public static final String NBT_QUERY_ENTITY = permission("nbt.query.entity");
     public static final String NBT_QUERY_BLOCK = permission("nbt.query.block");
     public static final String NBT_LOAD_ENTITY = permission("nbt.load.entity");

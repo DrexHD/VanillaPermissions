@@ -21,6 +21,7 @@
     "bypass.spawn_protection.DedicatedServerMixin",
     "bypass.whitelist.DedicatedPlayerListMixin",
     "command.GameModeCommandMixin",
+    "debugchart.DebugSampleSubscriptionTrackerMixin",
     "debugstick.DebugStickItemMixin",
     "nbt.BlockItemMixin",
     "nbt.EntityTypeMixin",
