@@ -22,4 +22,15 @@ public class DebugSampleSubscriptionTrackerMixin {
         return Permissions.check(player, Permission.DEBUG_CHART, original);
     }
 
+    @ModifyExpressionValue(
+        method = "method_56653",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/players/PlayerList;isOp(Lcom/mojang/authlib/GameProfile;)Z"
+        )
+    )
+    public boolean vanillaPermissions_addDebugChartPermission2(boolean original, ServerPlayer player) {
+        return Permissions.check(player, Permission.DEBUG_CHART, original);
+    }
+
 }
