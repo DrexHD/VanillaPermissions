@@ -12,9 +12,11 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.drex.vanillapermissions.event.ModifyExecuteCommand;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.commands.ExecuteCommand;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -83,7 +85,11 @@ public abstract class ExecuteCommandMixin {
                                     List<CommandSourceStack> list = Lists.newArrayList();
                                     ((CommandSourceStackAccessor) context.getSource()).setSilent(false);
                                     for (Entity entity : EntityArgument.getOptionalEntities(context, "targets")) {
-                                        list.add(context.getSource().withSource(entity));
+                                        CommandSource source = CommandSource.NULL;
+                                        if (entity instanceof ServerPlayer player) {
+                                            source = player.commandSource();
+                                        }
+                                        list.add(context.getSource().withSource(source));
                                     }
                                     return list;
                                 })
@@ -103,7 +109,10 @@ public abstract class ExecuteCommandMixin {
                                     List<CommandSourceStack> list = Lists.newArrayList();
                                     int originalPermissionLevel = ((CommandSourceStackAccessor) context.getSource()).getPermissionLevel();
                                     for (Entity entity : EntityArgument.getOptionalEntities(context, "targets")) {
-                                        int newPermissionLevel = ((EntityAccessor) entity).invokeGetPermissionLevel();
+                                        int newPermissionLevel = 0;
+                                        if (entity instanceof ServerPlayerAccessor accessor) {
+                                            newPermissionLevel = accessor.invokeGetPermissionLevel();
+                                        }
                                         list.add(context.getSource().withPermission(Math.min(originalPermissionLevel, newPermissionLevel)));
                                     }
                                     return list;

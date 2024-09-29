@@ -9,7 +9,7 @@
   "mixins": [
     "CommandNodeAccessor",
     "CommandSourceStackAccessor",
-    "EntityAccessor",
+    "ServerPlayerAccessor",
     "ExecuteCommandMixin",
     "PlayerListMixin",
     "adminbroadcast.CommandSourceStackMixin",
