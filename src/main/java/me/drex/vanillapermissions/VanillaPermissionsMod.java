@@ -30,7 +30,7 @@ public class VanillaPermissionsMod implements ModInitializer {
         CommandRegistrationCallback.EVENT.addPhaseOrdering(VanillaPermissionsMod.MODIFY_VANILLA_PERMISSIONS_PHASE, Event.DEFAULT_PHASE);
         CommandRegistrationCallback.EVENT.register(VanillaPermissionsMod.MODIFY_VANILLA_PERMISSIONS_PHASE, (dispatcher, registryAccess, environment) -> {
             for (CommandNode<CommandSourceStack> node : dispatcher.getRoot().getChildren()) {
-                alterCommandChildNode(dispatcher, node);
+                alterCommandChildNode(dispatcher, node, node.getRequirement());
             }
             LOGGER.info("Loaded Fabric Permissions");
         });
@@ -38,13 +38,13 @@ public class VanillaPermissionsMod implements ModInitializer {
     }
 
     @SuppressWarnings("unchecked")
-    private void alterCommandChildNode(CommandDispatcher<CommandSourceStack> dispatcher, CommandNode<CommandSourceStack> commandNode) {
+    private void alterCommandChildNode(CommandDispatcher<CommandSourceStack> dispatcher, CommandNode<CommandSourceStack> commandNode, Predicate<CommandSourceStack> fallback) {
         var name = build(dispatcher.getPath(commandNode).toArray(new String[]{}));
         LOGGER.debug("Alter command node {}", name);
         for (CommandNode<CommandSourceStack> child : commandNode.getChildren()) {
-            alterCommandChildNode(dispatcher, child);
+            alterCommandChildNode(dispatcher, child, fallback.and(commandNode.getRequirement()));
         }
-        ((CommandNodeAccessor<CommandSourceStack>) commandNode).setRequirement(createPredicate(name, commandNode.getRequirement()));
+        ((CommandNodeAccessor<CommandSourceStack>) commandNode).setRequirement(createPredicate(name, fallback));
     }
 
     private Predicate<CommandSourceStack> createPredicate(String name, Predicate<CommandSourceStack> fallback) {
