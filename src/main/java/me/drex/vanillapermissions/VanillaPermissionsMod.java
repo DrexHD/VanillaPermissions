@@ -6,6 +6,7 @@ import me.drex.vanillapermissions.mixin.CommandNodeAccessor;
 import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.fabricmc.api.DedicatedServerModInitializer;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.util.TriState;
@@ -18,14 +19,14 @@ import java.util.function.Predicate;
 
 import static me.drex.vanillapermissions.util.Permission.build;
 
-public class VanillaPermissionsMod implements DedicatedServerModInitializer {
+public class VanillaPermissionsMod implements ModInitializer {
 
     public static final String MOD_ID = "vanilla-permissions";
     private static final Logger LOGGER = LogManager.getLogger();
     public static final ResourceLocation MODIFY_VANILLA_PERMISSIONS_PHASE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "modify_vanilla_permissions");
 
     @Override
-    public void onInitializeServer() {
+    public void onInitialize() {
         CommandRegistrationCallback.EVENT.addPhaseOrdering(VanillaPermissionsMod.MODIFY_VANILLA_PERMISSIONS_PHASE, Event.DEFAULT_PHASE);
         CommandRegistrationCallback.EVENT.register(VanillaPermissionsMod.MODIFY_VANILLA_PERMISSIONS_PHASE, (dispatcher, registryAccess, environment) -> {
             for (CommandNode<CommandSourceStack> node : dispatcher.getRoot().getChildren()) {

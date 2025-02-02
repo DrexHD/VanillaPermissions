@@ -15,11 +15,8 @@
   "icon": "assets/vanilla-permissions/icon.png",
   "environment": "*",
   "entrypoints": {
-    "server": [
+    "main": [
       "me.drex.vanillapermissions.VanillaPermissionsMod"
-    ],
-    "preLaunch": [
-      "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
     ]
   },
   "custom": {
