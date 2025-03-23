@@ -9,9 +9,9 @@
   "mixins": [
     "CommandNodeAccessor",
     "CommandSourceStackAccessor",
-    "ServerPlayerAccessor",
     "ExecuteCommandMixin",
     "PlayerListMixin",
+    "ServerPlayerAccessor",
     "adminbroadcast.CommandSourceStackMixin",
     "bypass.chat_speed.ServerGamePacketListenerImplMixin",
     "bypass.force_gamemode.DefaultGameModeCommandsMixin",
