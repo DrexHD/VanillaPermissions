@@ -12,13 +12,13 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class DedicatedPlayerListMixin {
 
     @ModifyExpressionValue(
-            method = "canBypassPlayerLimit",
-            at = @At(
-                    value = "INVOKE", target = "Lnet/minecraft/server/players/ServerOpList;canBypassPlayerLimit(Lcom/mojang/authlib/GameProfile;)Z"
-            )
+        method = "canBypassPlayerLimit",
+        at = @At(
+            value = "INVOKE", target = "Lnet/minecraft/server/players/ServerOpList;canBypassPlayerLimit(Lcom/mojang/authlib/GameProfile;)Z"
+        )
     )
     public boolean vanillaPermissions_addBypassPlayerLimitPermission(boolean original, GameProfile gameProfile) {
-       return original || Permissions.check(gameProfile, Permission.BYPASS_PLAYER_LIMIT).join();
+        return original || Permissions.check(gameProfile, Permission.BYPASS_PLAYER_LIMIT).join();
     }
 
 }

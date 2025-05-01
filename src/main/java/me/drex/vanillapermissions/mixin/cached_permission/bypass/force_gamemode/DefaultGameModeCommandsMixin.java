@@ -1,7 +1,8 @@
-package me.drex.vanillapermissions.mixin.bypass.force_gamemode;
+package me.drex.vanillapermissions.mixin.cached_permission.bypass.force_gamemode;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import me.drex.vanillapermissions.util.IConnection;
 import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.server.commands.DefaultGameModeCommands;
@@ -21,7 +22,8 @@ public abstract class DefaultGameModeCommandsMixin {
             )
     )
     private static boolean vanillaPermissions_addDefaultGameModeOverridePermission(ServerPlayer player, GameType gameType, Operation<Boolean> original) {
-        if (Permissions.check(player, Permission.BYPASS_FORCE_GAMEMODE)) {
+        boolean result = ((IConnection) ((ServerCommonPacketListenerImplAccessor) player.connection).getConnection()).vanillaPermissions$getCachedPermission(Permission.BYPASS_FORCE_GAMEMODE);
+        if (result) {
             return false;
         }
         return original.call(player, gameType);
