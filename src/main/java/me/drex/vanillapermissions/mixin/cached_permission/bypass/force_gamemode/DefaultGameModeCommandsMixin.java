@@ -1,4 +1,4 @@
-package me.drex.vanillapermissions.mixin.bypass.force_gamemode;
+package me.drex.vanillapermissions.mixin.cached_permission.bypass.force_gamemode;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

@@ -29,14 +29,7 @@ dependencies {
     // Mod dependencies
     modImplementation include("me.lucko:fabric-permissions-api:${project.fabric_permissions_version}")
 
-    // Required by luckperms in local test environment
-    Set<String> apiModules = [
-            "fabric-lifecycle-events-v1",
-            "fabric-networking-api-v1"
-    ]
-    apiModules.forEach {
-        modRuntimeOnly(fabricApi.module(it, project.fabric_version))
-    }
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
 }
 
 processResources {
