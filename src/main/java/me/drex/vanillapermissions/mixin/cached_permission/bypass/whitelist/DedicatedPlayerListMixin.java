@@ -16,7 +16,7 @@ public abstract class DedicatedPlayerListMixin {
         method = "isWhiteListed",
         at = @At("RETURN")
     )
-    public boolean vanillaPermissions_addBypassWhitelistPermission(boolean original, GameProfile gameProfile) {
+    public boolean addBypassWhitelistPermission(boolean original, GameProfile gameProfile) {
         if (original) {
             return true;
         }

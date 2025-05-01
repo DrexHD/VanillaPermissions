@@ -36,96 +36,96 @@ import static net.minecraft.commands.arguments.EntityArgument.entities;
 public abstract class ExecuteCommandMixin {
 
     @Inject(
-            method = "addConditionals",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lcom/mojang/brigadier/builder/LiteralArgumentBuilder;then(Lcom/mojang/brigadier/builder/ArgumentBuilder;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
-                    remap = false,
-                    ordinal = 0
-            )
+        method = "addConditionals",
+        at = @At(
+            value = "INVOKE",
+            target = "Lcom/mojang/brigadier/builder/LiteralArgumentBuilder;then(Lcom/mojang/brigadier/builder/ArgumentBuilder;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
+            remap = false,
+            ordinal = 0
+        )
     )
-    private static void vanillaPermissions_addPermissionConditionArgument(
-            CommandNode<CommandSourceStack> node,
-            LiteralArgumentBuilder<CommandSourceStack> argumentBuilder,
-            boolean positive,
-            CommandBuildContext buildContext,
-            CallbackInfoReturnable<ArgumentBuilder<CommandSourceStack, ?>> cir
+    private static void addPermissionConditionArgument(
+        CommandNode<CommandSourceStack> node,
+        LiteralArgumentBuilder<CommandSourceStack> argumentBuilder,
+        boolean positive,
+        CommandBuildContext buildContext,
+        CallbackInfoReturnable<ArgumentBuilder<CommandSourceStack, ?>> cir
     ) {
         argumentBuilder.then(
-                literal("permission")
+            literal("permission")
+                .then(
+                    argument("entity", EntityArgument.entity())
                         .then(
-                                argument("entity", EntityArgument.entity())
-                                        .then(
-                                                addConditional(
-                                                        node,
-                                                        argument("permission", StringArgumentType.word()),
-                                                        positive,
-                                                        context -> Permissions.check(EntityArgument.getEntity(context, "entity"), StringArgumentType.getString(context, "permission"))
-                                                )
-                                        )
+                            addConditional(
+                                node,
+                                argument("permission", StringArgumentType.word()),
+                                positive,
+                                context -> Permissions.check(EntityArgument.getEntity(context, "entity"), StringArgumentType.getString(context, "permission"))
+                            )
                         )
+                )
         );
     }
 
     @WrapOperation(
-            method = "register",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lcom/mojang/brigadier/builder/LiteralArgumentBuilder;then(Lcom/mojang/brigadier/builder/ArgumentBuilder;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
-                    remap = false,
-                    ordinal = 0
-            )
+        method = "register",
+        at = @At(
+            value = "INVOKE",
+            target = "Lcom/mojang/brigadier/builder/LiteralArgumentBuilder;then(Lcom/mojang/brigadier/builder/ArgumentBuilder;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
+            remap = false,
+            ordinal = 0
+        )
     )
-    private static ArgumentBuilder<CommandSourceStack, ?> vanillaPermissions_addModifierArguments(LiteralArgumentBuilder<CommandSourceStack> instance, ArgumentBuilder<CommandSourceStack, ?> argumentBuilder, Operation<ArgumentBuilder<CommandSourceStack, ?>> original, @Local LiteralCommandNode<CommandSourceStack> root) {
+    private static ArgumentBuilder<CommandSourceStack, ?> addModifierArguments(LiteralArgumentBuilder<CommandSourceStack> instance, ArgumentBuilder<CommandSourceStack, ?> argumentBuilder, Operation<ArgumentBuilder<CommandSourceStack, ?>> original, @Local LiteralCommandNode<CommandSourceStack> root) {
         ModifyExecuteCommand.ADD_MODIFIER.invoker().addModifiers(instance, root);
         instance.then(
-                literal("feedback").then(
-                        literal("entity").then(
-                                argument("targets", entities()).fork(root, context -> {
-                                    List<CommandSourceStack> list = Lists.newArrayList();
-                                    ((CommandSourceStackAccessor) context.getSource()).setSilent(false);
-                                    for (Entity entity : EntityArgument.getOptionalEntities(context, "targets")) {
-                                        CommandSource source = CommandSource.NULL;
-                                        if (entity instanceof ServerPlayer player) {
-                                            source = player.commandSource();
-                                        }
-                                        list.add(context.getSource().withSource(source));
-                                    }
-                                    return list;
-                                })
-                        )
-                ).then(
-                        literal("silent").redirect(root, context -> context.getSource().withSuppressedOutput())
-                ).then(
-                        literal("console").redirect(root, context -> {
-                            ((CommandSourceStackAccessor) context.getSource()).setSilent(false);
-                            return context.getSource().withSource(context.getSource().getServer());
-                        })
+            literal("feedback").then(
+                literal("entity").then(
+                    argument("targets", entities()).fork(root, context -> {
+                        List<CommandSourceStack> list = Lists.newArrayList();
+                        ((CommandSourceStackAccessor) context.getSource()).setSilent(false);
+                        for (Entity entity : EntityArgument.getOptionalEntities(context, "targets")) {
+                            CommandSource source = CommandSource.NULL;
+                            if (entity instanceof ServerPlayer player) {
+                                source = player.commandSource();
+                            }
+                            list.add(context.getSource().withSource(source));
+                        }
+                        return list;
+                    })
                 )
+            ).then(
+                literal("silent").redirect(root, context -> context.getSource().withSuppressedOutput())
+            ).then(
+                literal("console").redirect(root, context -> {
+                    ((CommandSourceStackAccessor) context.getSource()).setSilent(false);
+                    return context.getSource().withSource(context.getSource().getServer());
+                })
+            )
         ).then(
-                literal("oplevel").then(
-                        literal("entity").then(
-                                argument("targets", entities()).fork(root, context -> {
-                                    List<CommandSourceStack> list = Lists.newArrayList();
-                                    int originalPermissionLevel = ((CommandSourceStackAccessor) context.getSource()).getPermissionLevel();
-                                    for (Entity entity : EntityArgument.getOptionalEntities(context, "targets")) {
-                                        int newPermissionLevel = 0;
-                                        if (entity instanceof ServerPlayerAccessor accessor) {
-                                            newPermissionLevel = accessor.invokeGetPermissionLevel();
-                                        }
-                                        list.add(context.getSource().withPermission(Math.min(originalPermissionLevel, newPermissionLevel)));
-                                    }
-                                    return list;
-                                })
-                        )
-                ).then(
-                        argument("level", integer(0, 4)).redirect(root, context -> {
-                                    int originalPermissionLevel = ((CommandSourceStackAccessor) context.getSource()).getPermissionLevel();
-                                    int newPermissionLevel = getInteger(context, "level");
-                                    return context.getSource().withPermission(Math.min(originalPermissionLevel, newPermissionLevel));
-                                }
-                        )
+            literal("oplevel").then(
+                literal("entity").then(
+                    argument("targets", entities()).fork(root, context -> {
+                        List<CommandSourceStack> list = Lists.newArrayList();
+                        int originalPermissionLevel = ((CommandSourceStackAccessor) context.getSource()).getPermissionLevel();
+                        for (Entity entity : EntityArgument.getOptionalEntities(context, "targets")) {
+                            int newPermissionLevel = 0;
+                            if (entity instanceof ServerPlayerAccessor accessor) {
+                                newPermissionLevel = accessor.invokeGetPermissionLevel();
+                            }
+                            list.add(context.getSource().withPermission(Math.min(originalPermissionLevel, newPermissionLevel)));
+                        }
+                        return list;
+                    })
                 )
+            ).then(
+                argument("level", integer(0, 4)).redirect(root, context -> {
+                        int originalPermissionLevel = ((CommandSourceStackAccessor) context.getSource()).getPermissionLevel();
+                        int newPermissionLevel = getInteger(context, "level");
+                        return context.getSource().withPermission(Math.min(originalPermissionLevel, newPermissionLevel));
+                    }
+                )
+            )
         );
         return original.call(instance, argumentBuilder);
     }

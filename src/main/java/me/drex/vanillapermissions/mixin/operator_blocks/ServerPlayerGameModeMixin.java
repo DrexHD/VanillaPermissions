@@ -25,13 +25,13 @@ public abstract class ServerPlayerGameModeMixin {
     protected ServerLevel level;
 
     @ModifyExpressionValue(
-            method = "destroyBlock",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
-            )
+        method = "destroyBlock",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
+        )
     )
-    public boolean vanillaPermissions_addOperatorBlockBreakPermission(boolean original, BlockPos pos) {
+    public boolean addOperatorBlockBreakPermission(boolean original, BlockPos pos) {
         Block block = this.level.getBlockState(pos).getBlock();
         return Permissions.check(this.player, Permission.OPERATOR_BLOCK_BREAK.formatted(BuiltInRegistries.BLOCK.getKey(block).getPath()), original);
     }

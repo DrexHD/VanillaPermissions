@@ -18,7 +18,7 @@ public abstract class EntitySelectorParserMixin {
             target = "Lnet/minecraft/commands/SharedSuggestionProvider;hasPermission(I)Z"
         )
     )
-    private static <S> boolean vanillaPermissions_addSelectorPermission(boolean original, S object) {
+    private static <S> boolean addSelectorPermission(boolean original, S object) {
         if (object instanceof CommandSourceStack source) {
             return Permissions.check(source, Permission.SELECTOR, original);
         }

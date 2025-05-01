@@ -5,6 +5,7 @@ import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -22,14 +23,17 @@ public abstract class OperatorBlockMixin extends Block {
     }
 
     @ModifyExpressionValue(
-            method = "useWithoutItem",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/player/Player;canUseGameMasterBlocks()Z"
-            )
+        method = "useWithoutItem",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/world/entity/player/Player;canUseGameMasterBlocks()Z"
+        )
     )
-    public boolean vanillaPermissions_addOperatorBlockEditPermission(boolean original, BlockState state, Level level, BlockPos pos, Player player) {
-        return Permissions.check(player, Permission.OPERATOR_BLOCK_VIEW.formatted(BuiltInRegistries.BLOCK.getKey(this).getPath()), original);
+    public boolean addOperatorBlockEditPermission(boolean original, BlockState state, Level level, BlockPos pos, Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            return Permissions.check(serverPlayer, Permission.OPERATOR_BLOCK_VIEW.formatted(BuiltInRegistries.BLOCK.getKey(this).getPath()), original);
+        }
+        return original;
     }
 
 }

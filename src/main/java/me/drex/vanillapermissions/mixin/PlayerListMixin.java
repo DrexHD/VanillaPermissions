@@ -9,14 +9,14 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public abstract class PlayerListMixin {
 
     @ModifyArg(
-            method = "sendPlayerPermissionLevel(Lnet/minecraft/server/level/ServerPlayer;)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/players/PlayerList;sendPlayerPermissionLevel(Lnet/minecraft/server/level/ServerPlayer;I)V"
-            ),
-            index = 1
+        method = "sendPlayerPermissionLevel(Lnet/minecraft/server/level/ServerPlayer;)V",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/players/PlayerList;sendPlayerPermissionLevel(Lnet/minecraft/server/level/ServerPlayer;I)V"
+        ),
+        index = 1
     )
-    public int vanillaPermissions_sendOpLevelTwoOrHigher(int permissionLevel) {
+    public int sendOpLevelTwoOrHigher(int permissionLevel) {
         return Math.max(2, permissionLevel);
     }
 

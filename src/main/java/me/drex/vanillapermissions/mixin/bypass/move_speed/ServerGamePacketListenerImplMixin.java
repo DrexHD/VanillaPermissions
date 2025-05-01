@@ -18,24 +18,24 @@ public abstract class ServerGamePacketListenerImplMixin {
     public ServerPlayer player;
 
     @ModifyExpressionValue(
-            method = "shouldCheckPlayerMovement",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;isSingleplayerOwner()Z"
-            )
+        method = "shouldCheckPlayerMovement",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;isSingleplayerOwner()Z"
+        )
     )
-    public boolean vanillaPermissions_addBypassMoveSpeedPlayerPermission(boolean original) {
+    public boolean addBypassMoveSpeedPlayerPermission(boolean original) {
         return Permissions.check(this.player, Permission.BYPASS_MOVE_SPEED_PLAYER, original);
     }
 
     @ModifyExpressionValue(
-            method = "handleMoveVehicle",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;isSingleplayerOwner()Z"
-            )
+        method = "handleMoveVehicle",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;isSingleplayerOwner()Z"
+        )
     )
-    public boolean vanillaPermissions_addBypassMoveSpeedVehiclePermission(boolean original) {
+    public boolean addBypassMoveSpeedVehiclePermission(boolean original) {
         ResourceLocation identifier = BuiltInRegistries.ENTITY_TYPE.getKey(this.player.getRootVehicle().getType());
         return Permissions.check(this.player, Permission.BYPASS_MOVE_SPEED_VEHICLE.formatted(identifier.getNamespace(), identifier.getPath()), original);
     }

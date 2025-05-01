@@ -18,7 +18,7 @@ public abstract class DedicatedPlayerListMixin {
             value = "INVOKE", target = "Lnet/minecraft/server/players/ServerOpList;canBypassPlayerLimit(Lcom/mojang/authlib/GameProfile;)Z"
         )
     )
-    public boolean vanillaPermissions_addBypassPlayerLimitPermission(boolean original, GameProfile gameProfile) {
+    public boolean addBypassPlayerLimitPermission(boolean original, GameProfile gameProfile) {
         if (original) {
             return true;
         }

@@ -26,9 +26,9 @@ import static me.drex.vanillapermissions.util.Permission.build;
 public class VanillaPermissionsMod implements ModInitializer {
 
     public static final String MOD_ID = "vanilla-permissions";
-    private static final Logger LOGGER = LogManager.getLogger();
     public static final ResourceLocation MODIFY_VANILLA_PERMISSIONS_PHASE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "modify_vanilla_permissions");
     public static final ResourceLocation CHECK_PERMISSIONS = ResourceLocation.fromNamespaceAndPath(MOD_ID, "check_permissions");
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final String[] CACHE_ON_QUERY = new String[]{
         Permission.BYPASS_WHITELIST,
         Permission.BYPASS_PLAYER_LIMIT,

@@ -21,7 +21,7 @@ public abstract class ServerPlayerMixin {
             target = "Lnet/minecraft/server/MinecraftServer;getForcedGameType()Lnet/minecraft/world/level/GameType;"
         )
     )
-    public GameType vanillaPermissions_addDefaultGameModeOverridePermission(MinecraftServer minecraftServer, Operation<GameType> original) {
+    public GameType addDefaultGameModeOverridePermission(MinecraftServer minecraftServer, Operation<GameType> original) {
         if (Arguments.CONNECTION.get() instanceof IConnection connection) {
             if (connection.vanillaPermissions$getCachedPermission(Permission.BYPASS_FORCE_GAMEMODE)) {
                 return null;

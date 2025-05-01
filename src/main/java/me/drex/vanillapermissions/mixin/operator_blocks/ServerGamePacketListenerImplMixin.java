@@ -15,49 +15,50 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ServerGamePacketListenerImpl.class)
 public abstract class ServerGamePacketListenerImplMixin {
 
-    @Shadow public ServerPlayer player;
+    @Shadow
+    public ServerPlayer player;
 
     @ModifyExpressionValue(
-            method = "handleSetCommandBlock",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
-            )
+        method = "handleSetCommandBlock",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
+        )
     )
-    public boolean vanillaPermissions_addCommandBlockEditPermission(boolean original) {
+    public boolean addCommandBlockEditPermission(boolean original) {
         return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(BuiltInRegistries.BLOCK.getKey(Blocks.COMMAND_BLOCK).getPath()), original);
     }
 
     @ModifyExpressionValue(
-            method = "handleSetJigsawBlock",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
-            )
+        method = "handleSetJigsawBlock",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
+        )
     )
-    public boolean vanillaPermissions_addJigsawBlockEditPermission(boolean original) {
+    public boolean addJigsawBlockEditPermission(boolean original) {
         return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(BuiltInRegistries.BLOCK.getKey(Blocks.JIGSAW).getPath()), original);
     }
 
     @ModifyExpressionValue(
-            method = "handleSetStructureBlock",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
-            )
+        method = "handleSetStructureBlock",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
+        )
     )
-    public boolean vanillaPermissions_addStructureBlockEditPermission(boolean original) {
+    public boolean addStructureBlockEditPermission(boolean original) {
         return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(BuiltInRegistries.BLOCK.getKey(Blocks.STRUCTURE_BLOCK).getPath()), original);
     }
 
     @ModifyExpressionValue(
-            method = "handleSetCommandMinecart",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
-            )
+        method = "handleSetCommandMinecart",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
+        )
     )
-    public boolean vanillaPermissions_addCommandBlockMinecartEditPermission(boolean original) {
+    public boolean addCommandBlockMinecartEditPermission(boolean original) {
         return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(BuiltInRegistries.ITEM.getKey(Items.COMMAND_BLOCK_MINECART).getPath()), original);
     }
 

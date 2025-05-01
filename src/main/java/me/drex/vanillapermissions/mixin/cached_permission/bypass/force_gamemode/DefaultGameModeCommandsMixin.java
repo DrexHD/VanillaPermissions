@@ -14,13 +14,13 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class DefaultGameModeCommandsMixin {
 
     @WrapOperation(
-            method = "setMode",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/level/ServerPlayer;setGameMode(Lnet/minecraft/world/level/GameType;)Z"
-            )
+        method = "setMode",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/level/ServerPlayer;setGameMode(Lnet/minecraft/world/level/GameType;)Z"
+        )
     )
-    private static boolean vanillaPermissions_addDefaultGameModeOverridePermission(ServerPlayer player, GameType gameType, Operation<Boolean> original) {
+    private static boolean addDefaultGameModeOverridePermission(ServerPlayer player, GameType gameType, Operation<Boolean> original) {
         if (Permissions.check(player, Permission.BYPASS_FORCE_GAMEMODE)) {
             return false;
         }

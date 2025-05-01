@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.5] - 2025-05-01
 ### Fixed
 - Server watchdog crashes
+- Client side crash
 
 ## [0.2.4] - 2024-08-08
 ### Added

@@ -17,13 +17,13 @@ public abstract class ServerGamePacketListenerImplMixin {
     public ServerPlayer player;
 
     @ModifyExpressionValue(
-            method = "detectRateSpam",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/players/PlayerList;isOp(Lcom/mojang/authlib/GameProfile;)Z"
-            )
+        method = "detectRateSpam",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/players/PlayerList;isOp(Lcom/mojang/authlib/GameProfile;)Z"
+        )
     )
-    public boolean vanillaPermissions_addBypassChatSpeedPermission(boolean original) {
+    public boolean addBypassChatSpeedPermission(boolean original) {
         return Permissions.check(this.player, Permission.BYPASS_CHAT_SPEED, original);
     }
 

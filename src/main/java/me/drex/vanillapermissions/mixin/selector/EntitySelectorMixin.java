@@ -12,13 +12,13 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class EntitySelectorMixin {
 
     @ModifyExpressionValue(
-            method = "checkPermissions",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/commands/CommandSourceStack;hasPermission(I)Z"
-            )
+        method = "checkPermissions",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/commands/CommandSourceStack;hasPermission(I)Z"
+        )
     )
-    public boolean vanillaPermissions_addSelectorPermission(boolean original, CommandSourceStack source) {
+    public boolean addSelectorPermission(boolean original, CommandSourceStack source) {
         return Permissions.check(source, Permission.SELECTOR, original);
     }
 

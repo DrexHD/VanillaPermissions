@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.GameMasterBlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -19,15 +20,17 @@ public abstract class GameMasterBlockItemMixin extends BlockItem {
     }
 
     @ModifyExpressionValue(
-            method = "getPlacementState",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/player/Player;canUseGameMasterBlocks()Z"
-            )
+        method = "getPlacementState",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/world/entity/player/Player;canUseGameMasterBlocks()Z"
+        )
     )
-    public boolean vanillaPermissions_addCommandBlockPlacePermission(boolean original, BlockPlaceContext context) {
-        assert context.getPlayer() != null;
-        return Permissions.check(context.getPlayer(), Permission.OPERATOR_BLOCK_PLACE.formatted(BuiltInRegistries.BLOCK.getKey(getBlock()).getPath()), original);
+    public boolean addCommandBlockPlacePermission(boolean original, BlockPlaceContext context) {
+        if (context.getPlayer() instanceof ServerPlayer serverPlayer) {
+            return Permissions.check(serverPlayer, Permission.OPERATOR_BLOCK_PLACE.formatted(BuiltInRegistries.BLOCK.getKey(getBlock()).getPath()), original);
+        }
+        return original;
     }
 
 }

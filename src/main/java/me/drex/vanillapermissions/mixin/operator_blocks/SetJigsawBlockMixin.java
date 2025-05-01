@@ -14,16 +14,17 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ServerGamePacketListenerImpl.class)
 public abstract class SetJigsawBlockMixin {
 
-    @Shadow public ServerPlayer player;
+    @Shadow
+    public ServerPlayer player;
 
     @ModifyExpressionValue(
-            method = "handleSetJigsawBlock",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
-            )
+        method = "handleSetJigsawBlock",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
+        )
     )
-    public boolean vanillaPermissions_addJigsawBlockEditPermission(boolean original) {
+    public boolean addJigsawBlockEditPermission(boolean original) {
         return Permissions.check(this.player, Permission.OPERATOR_BLOCK_EDIT.formatted(BuiltInRegistries.BLOCK.getKey(Blocks.JIGSAW).getPath()), original);
     }
 

@@ -13,13 +13,13 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class CommandSourceStackMixin {
 
     @ModifyExpressionValue(
-            method = "broadcastToAdmins",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/players/PlayerList;isOp(Lcom/mojang/authlib/GameProfile;)Z"
-            )
+        method = "broadcastToAdmins",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/players/PlayerList;isOp(Lcom/mojang/authlib/GameProfile;)Z"
+        )
     )
-    public boolean vanillaPermissions_addAdminBroadcastReceivePermission(boolean original, @Local ServerPlayer player) {
+    public boolean addAdminBroadcastReceivePermission(boolean original, @Local ServerPlayer player) {
         return Permissions.check(player, Permission.ADMIN_BROADCAST_RECEIVE, original);
     }
 

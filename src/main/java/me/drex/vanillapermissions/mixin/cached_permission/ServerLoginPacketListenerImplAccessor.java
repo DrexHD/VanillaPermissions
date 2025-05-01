@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface ServerLoginPacketListenerImplAccessor {
     @Accessor
     GameProfile getAuthenticatedProfile();
+
     @Accessor
     Connection getConnection();
 }

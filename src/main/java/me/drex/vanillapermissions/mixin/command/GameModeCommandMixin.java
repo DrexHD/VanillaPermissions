@@ -35,16 +35,16 @@ public abstract class GameModeCommandMixin {
     @Overwrite
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralArgumentBuilder<CommandSourceStack> literalArgumentBuilder = Commands.literal("gamemode")
-                .requires(commandSourceStack -> commandSourceStack.hasPermission(2));
+            .requires(commandSourceStack -> commandSourceStack.hasPermission(2));
 
         for (GameType gameType : GameType.values()) {
             literalArgumentBuilder.then(
-                    Commands.literal(gameType.getName())
-                            .executes(context -> setMode(context, Collections.singleton(context.getSource().getPlayerOrException()), gameType))
-                            .then(
-                                    Commands.argument("target", EntityArgument.players())
-                                            .executes(commandContext -> setMode(commandContext, EntityArgument.getPlayers(commandContext, "target"), gameType))
-                            )
+                Commands.literal(gameType.getName())
+                    .executes(context -> setMode(context, Collections.singleton(context.getSource().getPlayerOrException()), gameType))
+                    .then(
+                        Commands.argument("target", EntityArgument.players())
+                            .executes(commandContext -> setMode(commandContext, EntityArgument.getPlayers(commandContext, "target"), gameType))
+                    )
             );
         }
         dispatcher.register(literalArgumentBuilder);

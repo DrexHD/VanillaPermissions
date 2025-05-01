@@ -21,7 +21,7 @@ public class DebugSampleSubscriptionTrackerMixin {
             target = "Lnet/minecraft/server/players/PlayerList;isOp(Lcom/mojang/authlib/GameProfile;)Z"
         )
     )
-    public boolean vanillaPermissions_addDebugChartPermission(boolean original, ServerPlayer player) {
+    public boolean addDebugChartPermission(boolean original, ServerPlayer player) {
         return Permissions.check(player, Permission.DEBUG_CHART, original);
     }
 
@@ -32,7 +32,7 @@ public class DebugSampleSubscriptionTrackerMixin {
             target = "Lnet/minecraft/server/players/PlayerList;isOp(Lcom/mojang/authlib/GameProfile;)Z"
         )
     )
-    public boolean vanillaPermissions_addDebugChartPermission2(boolean original, @Local(argsOnly = true) Map.Entry<ServerPlayer, Object> entry) {
+    public boolean addDebugChartPermission2(boolean original, @Local(argsOnly = true) Map.Entry<ServerPlayer, Object> entry) {
         return Permissions.check(entry.getKey(), Permission.DEBUG_CHART, original);
     }
 

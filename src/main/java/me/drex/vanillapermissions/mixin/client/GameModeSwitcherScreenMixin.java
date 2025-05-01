@@ -13,11 +13,11 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class GameModeSwitcherScreenMixin {
 
     @ModifyExpressionValue(
-            method = "switchToHoveredGameMode(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/debug/GameModeSwitcherScreen$GameModeIcon;)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/player/LocalPlayer;hasPermissions(I)Z"
-            )
+        method = "switchToHoveredGameMode(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/debug/GameModeSwitcherScreen$GameModeIcon;)V",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/player/LocalPlayer;hasPermissions(I)Z"
+        )
     )
     private static boolean hasCommandAccess(boolean original, Minecraft minecraft, GameModeSwitcherScreen.GameModeIcon icon) {
         return true;
