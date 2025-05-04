@@ -2,17 +2,24 @@ package me.drex.vanillapermissions.mixin.cached_permission.bypass.force_gamemode
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import me.drex.vanillapermissions.util.Arguments;
-import me.drex.vanillapermissions.util.IConnection;
+import com.mojang.authlib.GameProfile;
+import me.drex.vanillapermissions.util.JoinCache;
 import me.drex.vanillapermissions.util.Permission;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ServerPlayer.class)
-public abstract class ServerPlayerMixin {
+public abstract class ServerPlayerMixin extends Player {
+
+    public ServerPlayerMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
+        super(level, blockPos, f, gameProfile);
+    }
 
     @WrapOperation(
         method = "calculateGameModeForNewPlayer",
@@ -22,10 +29,8 @@ public abstract class ServerPlayerMixin {
         )
     )
     public GameType addDefaultGameModeOverridePermission(MinecraftServer minecraftServer, Operation<GameType> original) {
-        if (Arguments.CONNECTION.get() instanceof IConnection connection) {
-            if (connection.vanillaPermissions$getCachedPermission(Permission.BYPASS_FORCE_GAMEMODE)) {
-                return null;
-            }
+        if (JoinCache.getCachedPermissions(uuid, Permission.BYPASS_FORCE_GAMEMODE).get()) {
+            return null;
         }
         return original.call(minecraftServer);
     }
