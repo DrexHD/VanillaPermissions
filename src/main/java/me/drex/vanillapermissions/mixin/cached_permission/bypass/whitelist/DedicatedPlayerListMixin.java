@@ -16,7 +16,10 @@ public abstract class DedicatedPlayerListMixin {
         at = @At("RETURN")
     )
     public boolean addBypassWhitelistPermission(boolean original, GameProfile gameProfile) {
-        return JoinCache.getCachedPermissions(gameProfile.getId(), Permission.BYPASS_WHITELIST).orElse(original);
+        if(original) {
+            return true;
+        }
+        return JoinCache.getCachedPermissions(gameProfile.getId(), Permission.BYPASS_WHITELIST).orElse(false);
     }
 
 }
