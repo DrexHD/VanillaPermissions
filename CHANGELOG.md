@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.8] - 2025-05-23
+### Changed
+- Use stonecutter to support 1.20.1, 1.21.1, 1.21.4 and 1.21.5
+
 ## [0.2.7] - 2025-05-21
 ### Fixed
 - Behaviour of 'minecraft.bypass.whitelist' permission

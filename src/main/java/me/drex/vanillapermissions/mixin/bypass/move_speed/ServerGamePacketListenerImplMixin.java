@@ -18,7 +18,11 @@ public abstract class ServerGamePacketListenerImplMixin {
     public ServerPlayer player;
 
     @ModifyExpressionValue(
+        //? if >= 1.21.2 {
         method = "shouldCheckPlayerMovement",
+        //?} else {
+        /*method = "handleMovePlayer",
+        *///?}
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;isSingleplayerOwner()Z"

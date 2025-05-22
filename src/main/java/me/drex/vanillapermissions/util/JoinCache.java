@@ -21,7 +21,7 @@ import static me.drex.vanillapermissions.VanillaPermissionsMod.LOGGER;
 // so they can be used during the player join process with
 public class JoinCache {
 
-    public static final ResourceLocation CHECK_PERMISSIONS = ResourceLocation.fromNamespaceAndPath(VanillaPermissionsMod.MOD_ID, "check_permissions");
+    public static final ResourceLocation CHECK_PERMISSIONS = VanillaPermissionsMod.id("check_permissions");
 
     private static final String[] CACHE_ON_QUERY = new String[]{
         Permission.BYPASS_WHITELIST,

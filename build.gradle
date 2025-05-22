@@ -27,7 +27,9 @@ dependencies {
     modImplementation(fabricApi.module("fabric-command-api-v2", project.fabric_version))
 
     // Mod dependencies
-    modImplementation include("me.lucko:fabric-permissions-api:${project.fabric_permissions_version}")
+    modImplementation include("me.lucko:fabric-permissions-api:${project.fabric_permissions_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
 }
@@ -49,7 +51,11 @@ java {
 }
 
 loom {
-    accessWidenerPath.set(file("src/main/resources/vanilla-permissions.accesswidener"))
+    accessWidenerPath.set(file("../../src/main/resources/vanilla-permissions.accesswidener"))
+
+    runConfigs.all {
+        ideConfigGenerated(true)
+    }
 }
 
 jar {

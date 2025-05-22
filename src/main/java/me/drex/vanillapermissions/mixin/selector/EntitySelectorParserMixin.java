@@ -1,5 +1,5 @@
 package me.drex.vanillapermissions.mixin.selector;
-
+//? if >= 1.21.1 {
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -26,3 +26,13 @@ public abstract class EntitySelectorParserMixin {
     }
 
 }
+//?} else {
+
+/*import net.minecraft.server.MinecraftServer;
+import org.spongepowered.asm.mixin.Mixin;
+
+@Mixin(MinecraftServer.class)
+public abstract class EntitySelectorParserMixin {
+
+}
+*///?}

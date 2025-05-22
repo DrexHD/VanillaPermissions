@@ -1,5 +1,6 @@
 package me.drex.vanillapermissions.mixin.debugchart;
 
+//? if >= 1.20.5 {
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import me.drex.vanillapermissions.util.Permission;
@@ -37,3 +38,12 @@ public class DebugSampleSubscriptionTrackerMixin {
     }
 
 }
+//?} else {
+
+/*import net.minecraft.server.MinecraftServer;
+import org.spongepowered.asm.mixin.Mixin;
+
+@Mixin(MinecraftServer.class)
+public class DebugSampleSubscriptionTrackerMixin {
+}
+*///?}

@@ -22,7 +22,7 @@ import static me.drex.vanillapermissions.util.Permission.build;
 public class VanillaPermissionsMod implements ModInitializer {
 
     public static final String MOD_ID = "vanilla-permissions";
-    public static final ResourceLocation MODIFY_VANILLA_PERMISSIONS_PHASE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "modify_vanilla_permissions");
+    public static final ResourceLocation MODIFY_VANILLA_PERMISSIONS_PHASE = id("modify_vanilla_permissions");
     public static final Logger LOGGER = LogManager.getLogger();
 
     @Override
@@ -57,6 +57,14 @@ public class VanillaPermissionsMod implements ModInitializer {
                 return fallback.test(source);
             }
         };
+    }
+
+    public static ResourceLocation id(String path) {
+        //? if >= 1.21 {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+        //?} else {
+        /*return new ResourceLocation(MOD_ID, path);
+        *///?}
     }
 
 }

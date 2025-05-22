@@ -85,11 +85,15 @@ public abstract class ExecuteCommandMixin {
                         List<CommandSourceStack> list = Lists.newArrayList();
                         ((CommandSourceStackAccessor) context.getSource()).setSilent(false);
                         for (Entity entity : EntityArgument.getOptionalEntities(context, "targets")) {
+                            //? if >= 1.21.2 {
                             CommandSource source = CommandSource.NULL;
                             if (entity instanceof ServerPlayer player) {
                                 source = player.commandSource();
                             }
                             list.add(context.getSource().withSource(source));
+                            //?} else {
+                            /*list.add(context.getSource().withSource(entity));
+                            *///?}
                         }
                         return list;
                     })
