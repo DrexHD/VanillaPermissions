@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.9] - 2025-05-29
+### Added
+- 1.21.6-pre release
+
+### Fixed
+- Use java 17 to compile 1.20.1
+
 ## [0.2.8] - 2025-05-23
 ### Changed
 - Use stonecutter to support 1.20.1, 1.21.1, 1.21.4 and 1.21.5
