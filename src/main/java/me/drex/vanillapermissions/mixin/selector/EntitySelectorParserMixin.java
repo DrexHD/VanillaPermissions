@@ -15,7 +15,7 @@ public abstract class EntitySelectorParserMixin {
         method = "allowSelectors",
         at = @At(
             value = "INVOKE",
-            //? if >= 1.21.6-pre1 {
+            //? if >= 1.21.6 {
             target = "Lnet/minecraft/commands/PermissionSource;allowsSelectors()Z"
             //?} else {
             /*target = "Lnet/minecraft/commands/SharedSuggestionProvider;hasPermission(I)Z"

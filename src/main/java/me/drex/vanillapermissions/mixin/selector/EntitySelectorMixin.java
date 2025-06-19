@@ -15,7 +15,11 @@ public abstract class EntitySelectorMixin {
         method = "checkPermissions",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/commands/CommandSourceStack;hasPermission(I)Z"
+            //? if >= 1.21.6 {
+            target = "Lnet/minecraft/commands/CommandSourceStack;allowsSelectors()Z"
+            //?} else {
+            /*target = "Lnet/minecraft/commands/CommandSourceStack;hasPermission(I)Z"
+            *///?}
         )
     )
     public boolean addSelectorPermission(boolean original, CommandSourceStack source) {
