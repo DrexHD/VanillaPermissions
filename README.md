@@ -27,11 +27,21 @@ This mod adds permission checks into vanilla, to allow for full permission custo
 
 ## Commands
 
-Command permissions use the node system of [brigadier](https://github.com/Mojang/brigadier). Each node has its own
-permission, e.g. to get access to the `/gamemode survival` command `minecraft.command.gamemode` permission is required
-for access to the `/gamemode` command node, and `minecraft.command.gamemode.survival` is required to be able to run
-`/gamemode survival`. If you wish to grant full access to a command you need to give access to all child nodes, e.g.
-`minecraft.command.gamemode.*`.
+This mod uses [Brigadier's](https://github.com/Mojang/brigadier) node-based permission system. Each command is made up of multiple nodes, and each node has its own permission.
+
+For example, the `/gamemode` command:
+- The root command node (`/gamemode`) requires minecraft.command.gamemode.
+- Sub-nodes like `survival`, `creative`, etc., use `minecraft.command.gamemode.survival`, `minecraft.command.gamemode.creative`, and so on.
+
+In vanilla Minecraft, only the **root node** has a permission check (e.g. OP level 2). Once a player has access to that root node, **all sub-nodes are considered unlocked by default**.
+
+If you want finer control, you can manually restrict sub-nodes by denying their specific permissions.
+
+For example: 
+- Allow `minecraft.command.gamemode`
+- Deny `minecraft.command.gamemode.creative` and `minecraft.command.gamemode.spectator`
+
+This allows players to use `/gamemode` but restricts them to only the allowed sub-options (e.g., survival and adventure).
 
 ## Quality of Life
 
