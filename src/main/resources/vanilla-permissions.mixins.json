@@ -35,6 +35,7 @@
     "operator_blocks.ServerPlayerGameModeMixin",
     "operator_blocks.SetJigsawBlockMixin",
     "operator_blocks.StructureBlockEntityMixin",
+    "selector.EntityArgumentMixin",
     "selector.EntitySelectorMixin",
     "selector.EntitySelectorParserMixin"
   ],
