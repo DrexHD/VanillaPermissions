@@ -24,9 +24,11 @@ public class Permission {
     public static final String OPERATOR_BLOCK_EDIT = permission("operator_block.%s.edit");
     public static final String OPERATOR_BLOCK_BREAK = permission("operator_block.%s.break");
     public static final String SELECTOR = permission("selector");
-    public static final String SELECTOR_ENTITY = permission("selector.%s.%s.entity");
-    public static final String SELECTOR_PLAYER = permission("selector.%s.%s.player");
-    public static final String SELECTOR_SELF = permission("selector.%s.%s.self");
+    public static final String SELECTOR_ENTITY = permission("selector.entity.%s.%s");
+    public static final String SELECTOR_PLAYER = permission("selector.player.%s.%s");
+    public static final String SELECTOR_SELF = permission("selector.self.%s.%s");
+    public static final String SELECTOR_LIMIT = permission("selector.limit.%s.%s");
+    public static final String SELECTOR_WEIGHT = permission("selector.weight.%s.%s");
 
     protected static String permission(String permission) {
         return build(ResourceLocation.DEFAULT_NAMESPACE, permission);
