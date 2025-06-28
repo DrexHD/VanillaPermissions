@@ -150,6 +150,14 @@ Player4: (no weight set)
 | Player3 | All players              | Weight ($7$) ≥ all others' weights                                         |
 | Player4 | All players              | No weight restriction → unrestricted access                                |
 
+### Limitation
+
+Selectors in chat message (e.g. `/me`) bypass fine-grained permissions.
+
+Players without all three scopes cannot do `/scoreboard` on offline players.
+
+With all three scopes, players doing `/scoreboard` on offline players bypass selection weight.
+
 ## Quality of Life
 
 ### Server Side

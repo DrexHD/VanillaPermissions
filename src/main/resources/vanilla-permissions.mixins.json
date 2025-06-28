@@ -13,6 +13,10 @@
     "PlayerListMixin",
     "ServerPlayerAccessor",
     "adminbroadcast.CommandSourceStackMixin",
+    "argument.EntityArgumentMixin",
+    "argument.GameProfileArgumentMixin",
+    "argument.ScoreHolderArgumentMixin",
+    "argument.WaypointArgumentMixin",
     "bypass.chat_speed.ServerGamePacketListenerImplMixin",
     "bypass.move_speed.ServerGamePacketListenerImplMixin",
     "bypass.spawn_protection.DedicatedServerMixin",
@@ -35,7 +39,6 @@
     "operator_blocks.ServerPlayerGameModeMixin",
     "operator_blocks.SetJigsawBlockMixin",
     "operator_blocks.StructureBlockEntityMixin",
-    "selector.EntityArgumentMixin",
     "selector.EntitySelectorMixin",
     "selector.EntitySelectorParserMixin"
   ],
