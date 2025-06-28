@@ -158,6 +158,8 @@ Players without all three scopes cannot do `/scoreboard` on offline players.
 
 With all three scopes, players doing `/scoreboard` on offline players bypass selection weight.
 
+`/ban-ip` bypasses all selector permission checks.
+
 ## Quality of Life
 
 ### Server Side

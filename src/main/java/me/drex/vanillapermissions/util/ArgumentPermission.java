@@ -28,12 +28,12 @@ public class ArgumentPermission {
         var entity = Permissions.check(source, Permission.SELECTOR_ENTITY.formatted(root, selector), true);
         var player = Permissions.check(source, Permission.SELECTOR_PLAYER.formatted(root, selector), true);
         var self = Permissions.check(source, Permission.SELECTOR_SELF.formatted(root, selector), true);
-        if (entity && player && self) return;
 
         var weight = Permission.SELECTOR_WEIGHT.formatted(root, selector);
         var sourceWeight = Options.get(source, weight, Integer::parseInt);
         var sourceWeightPresent = sourceWeight.isPresent();
         var sourceWeightValue = sourceWeight.orElse(0);
+        if (entity && player && self && !sourceWeightPresent) return;
 
         var weightChecks = new CompletableFuture[selected.size()];
         var weightCheckIndex = 0;
