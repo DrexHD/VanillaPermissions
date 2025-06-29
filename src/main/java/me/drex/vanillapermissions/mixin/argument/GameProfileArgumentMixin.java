@@ -21,6 +21,6 @@ public abstract class GameProfileArgumentMixin {
         at = @At("RETURN")
     )
     private static void addGameProfilesPermission(CommandContext<CommandSourceStack> commandContext, String string, CallbackInfoReturnable<Collection<GameProfile>> cir) throws CommandSyntaxException {
-        ArgumentPermission.check(commandContext, string, cir.getReturnValue());
+        ArgumentPermission.check(commandContext, cir.getReturnValue());
     }
 }

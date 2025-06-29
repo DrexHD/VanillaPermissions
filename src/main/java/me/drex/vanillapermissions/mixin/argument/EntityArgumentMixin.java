@@ -25,7 +25,7 @@ public abstract class EntityArgumentMixin {
         at = @At("RETURN")
     )
     private static void addEntityPermission(CommandContext<CommandSourceStack> commandContext, String string, CallbackInfoReturnable<Entity> cir) throws CommandSyntaxException {
-        ArgumentPermission.check(commandContext, string, Collections.singleton(cir.getReturnValue()));
+        ArgumentPermission.check(commandContext, Collections.singleton(cir.getReturnValue()));
     }
 
     @Inject(
@@ -38,6 +38,6 @@ public abstract class EntityArgumentMixin {
         at = @At("RETURN")
     )
     private static void addEntitiesPermission(CommandContext<CommandSourceStack> commandContext, String string, CallbackInfoReturnable<Collection<Entity>> cir) throws CommandSyntaxException {
-        ArgumentPermission.check(commandContext, string, cir.getReturnValue());
+        ArgumentPermission.check(commandContext, cir.getReturnValue());
     }
 }

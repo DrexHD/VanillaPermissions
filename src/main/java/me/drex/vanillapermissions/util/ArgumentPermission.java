@@ -1,5 +1,6 @@
 package me.drex.vanillapermissions.util;
 
+import com.google.common.collect.Iterables;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -15,21 +16,25 @@ import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
+import static me.drex.vanillapermissions.util.Permission.build;
+
 public class ArgumentPermission {
 
-    public static void check(CommandContext<CommandSourceStack> context, String selector, Collection<?> selected) throws CommandSyntaxException {
+    public static void check(CommandContext<CommandSourceStack> context, Collection<?> selected) throws CommandSyntaxException {
         var source = context.getSource();
         if (!source.isPlayer()) return;
 
-        var root = context.getRootNode().getName();
-        var limit = Options.get(source, Permission.SELECTOR_LIMIT.formatted(root, selector), Integer::parseInt);
+        var dispatcher = context.getSource().getServer().getCommands().getDispatcher();
+        var node = Iterables.getLast(context.getNodes()).getNode();
+        var name = build(dispatcher.getPath(node).toArray(new String[]{}));
+        var limit = Options.get(source, Permission.SELECTOR_LIMIT.formatted(name), Integer::parseInt);
         if (limit.isPresent() && limit.get() < selected.size()) throw EntityArgument.ERROR_SELECTORS_NOT_ALLOWED.create();
 
-        var entity = Permissions.check(source, Permission.SELECTOR_ENTITY.formatted(root, selector), true);
-        var player = Permissions.check(source, Permission.SELECTOR_PLAYER.formatted(root, selector), true);
-        var self = Permissions.check(source, Permission.SELECTOR_SELF.formatted(root, selector), true);
+        var entity = Permissions.check(source, Permission.SELECTOR_ENTITY.formatted(name), true);
+        var player = Permissions.check(source, Permission.SELECTOR_PLAYER.formatted(name), true);
+        var self = Permissions.check(source, Permission.SELECTOR_SELF.formatted(name), true);
 
-        var weight = Permission.SELECTOR_WEIGHT.formatted(root, selector);
+        var weight = Permission.SELECTOR_WEIGHT.formatted(name);
         var sourceWeight = Options.get(source, weight, Integer::parseInt);
         var sourceWeightPresent = sourceWeight.isPresent();
         var sourceWeightValue = sourceWeight.orElse(0);

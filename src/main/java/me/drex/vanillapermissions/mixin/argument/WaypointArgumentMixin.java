@@ -23,7 +23,7 @@ public abstract class WaypointArgumentMixin {
         at = @At("JUMP")
     )
     private static void addWaypointPermission(CommandContext<CommandSourceStack> commandContext, String string, CallbackInfoReturnable<WaypointTransmitter> cir, @Local Entity entity) throws CommandSyntaxException {
-        ArgumentPermission.check(commandContext, string, Collections.singleton(entity));
+        ArgumentPermission.check(commandContext, Collections.singleton(entity));
     }
 }
 //?} else {
