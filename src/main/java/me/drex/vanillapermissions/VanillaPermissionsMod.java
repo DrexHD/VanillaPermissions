@@ -1,6 +1,5 @@
 package me.drex.vanillapermissions;
 
-import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
 import me.drex.vanillapermissions.mixin.CommandNodeAccessor;
 import me.drex.vanillapermissions.util.JoinCache;
@@ -30,7 +29,7 @@ public class VanillaPermissionsMod implements ModInitializer {
         CommandRegistrationCallback.EVENT.addPhaseOrdering(VanillaPermissionsMod.MODIFY_VANILLA_PERMISSIONS_PHASE, Event.DEFAULT_PHASE);
         CommandRegistrationCallback.EVENT.register(VanillaPermissionsMod.MODIFY_VANILLA_PERMISSIONS_PHASE, (dispatcher, registryAccess, environment) -> {
             for (CommandNode<CommandSourceStack> node : dispatcher.getRoot().getChildren()) {
-                alterCommandChildNode(dispatcher, node);
+                alterCommandChildNode(node.getName(), node);
             }
             LOGGER.info("Loaded Fabric Permissions");
         });
@@ -38,11 +37,10 @@ public class VanillaPermissionsMod implements ModInitializer {
     }
 
     @SuppressWarnings("unchecked")
-    private void alterCommandChildNode(CommandDispatcher<CommandSourceStack> dispatcher, CommandNode<CommandSourceStack> commandNode) {
-        var name = build(dispatcher.getPath(commandNode).toArray(new String[]{}));
+    private void alterCommandChildNode(String name, CommandNode<CommandSourceStack> commandNode) {
         LOGGER.debug("Alter command node {}", name);
         for (CommandNode<CommandSourceStack> child : commandNode.getChildren()) {
-            alterCommandChildNode(dispatcher, child);
+            alterCommandChildNode(build(name, child.getName()), child);
         }
         ((CommandNodeAccessor<CommandSourceStack>) commandNode).setRequirement(createPredicate(name, commandNode.getRequirement()));
     }
