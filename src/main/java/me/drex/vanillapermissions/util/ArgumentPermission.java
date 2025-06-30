@@ -1,14 +1,9 @@
 package me.drex.vanillapermissions.util;
 
-import com.google.common.collect.Iterables;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.drex.vanillapermissions.VanillaPermissionsMod;
-import me.lucko.fabric.api.permissions.v0.Options;
-import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
@@ -16,65 +11,70 @@ import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
+import static me.drex.vanillapermissions.VanillaPermissionsMod.LOGGER;
 import static me.drex.vanillapermissions.util.Permission.build;
+import static me.drex.vanillapermissions.util.Permission.SELECTOR_ENTITY;
+import static me.drex.vanillapermissions.util.Permission.SELECTOR_PLAYER;
+import static me.drex.vanillapermissions.util.Permission.SELECTOR_SELF;
+import static me.drex.vanillapermissions.util.Permission.SELECTOR_LIMIT;
+import static me.drex.vanillapermissions.util.Permission.SELECTOR_WEIGHT;
+import static me.lucko.fabric.api.permissions.v0.Options.get;
+import static me.lucko.fabric.api.permissions.v0.Permissions.check;
+import static net.minecraft.commands.arguments.EntityArgument.ERROR_SELECTORS_NOT_ALLOWED;
+
+import static java.util.concurrent.CompletableFuture.allOf;
 
 public class ArgumentPermission {
 
-    public static void check(CommandContext<CommandSourceStack> context, Collection<?> selected) throws CommandSyntaxException {
+    private static void streamThrow() throws RuntimeException {
+        throw new RuntimeException(ERROR_SELECTORS_NOT_ALLOWED.create());
+    }
+
+    public static void validate(CommandContext<CommandSourceStack> context, Collection<?> selected) throws CommandSyntaxException {
         var source = context.getSource();
         if (!source.isPlayer()) return;
 
-        var dispatcher = context.getSource().getServer().getCommands().getDispatcher();
-        var node = Iterables.getLast(context.getNodes()).getNode();
-        var name = build(dispatcher.getPath(node).toArray(new String[]{}));
-        var limit = Options.get(source, Permission.SELECTOR_LIMIT.formatted(name), Integer::parseInt);
-        if (limit.isPresent() && limit.get() < selected.size()) throw EntityArgument.ERROR_SELECTORS_NOT_ALLOWED.create();
+        var name = build(source.getServer().getCommands().getDispatcher().getPath(context.getNodes().getLast().getNode()).toArray(String[]::new)); // > 1.21: source.getServer().getCommands().getDispatcher() -> source.dispatcher()
+        var limit = get(source, SELECTOR_LIMIT.formatted(name), Integer::parseInt);
+        if (limit.isPresent() && limit.get() < selected.size()) throw ERROR_SELECTORS_NOT_ALLOWED.create();
 
-        var entity = Permissions.check(source, Permission.SELECTOR_ENTITY.formatted(name), true);
-        var player = Permissions.check(source, Permission.SELECTOR_PLAYER.formatted(name), true);
-        var self = Permissions.check(source, Permission.SELECTOR_SELF.formatted(name), true);
+        var entity = check(source, SELECTOR_ENTITY.formatted(name), true);
+        var player = check(source, SELECTOR_PLAYER.formatted(name), true);
+        var self = check(source, SELECTOR_SELF.formatted(name), true);
 
-        var weight = Permission.SELECTOR_WEIGHT.formatted(name);
-        var sourceWeight = Options.get(source, weight, Integer::parseInt);
+        var weight = SELECTOR_WEIGHT.formatted(name);
+        var sourceWeight = get(source, weight, Integer::parseInt);
         var sourceWeightPresent = sourceWeight.isPresent();
-        var sourceWeightValue = sourceWeight.orElse(0);
         if (entity && player && self && !sourceWeightPresent) return;
-
-        var weightChecks = new CompletableFuture[selected.size()];
-        var weightCheckIndex = 0;
+        var sourceWeightValue = sourceWeight.orElse(0);
 
         var sourcePlayer = source.getPlayer().getGameProfile();
-        for (var selectedEntity : selected) {
-            if (selectedEntity instanceof Player selectedPlayer) {
-                selectedEntity = selectedPlayer.getGameProfile();
-            }
-
-            if (selectedEntity instanceof Entity) {
-                if (!entity) throw EntityArgument.ERROR_SELECTORS_NOT_ALLOWED.create();
-            } else if (selectedEntity instanceof GameProfile selectedPlayer) {
-                if (selectedPlayer.equals(sourcePlayer)) {
-                    if (!self) throw EntityArgument.ERROR_SELECTORS_NOT_ALLOWED.create();
-                } else {
-                    if (!player) throw EntityArgument.ERROR_SELECTORS_NOT_ALLOWED.create();
-                    if (!sourceWeightPresent) continue;
-
-                    weightChecks[weightCheckIndex] = Options.get(selectedPlayer, weight, Integer::parseInt).thenAcceptAsync(selectedWeight -> {
-                        if (selectedWeight.isPresent() && selectedWeight.get() > sourceWeightValue) throw new CompletionException(EntityArgument.ERROR_SELECTORS_NOT_ALLOWED.create());
-                    });
-                    weightCheckIndex++;
-                }
-            } else {
-                throw EntityArgument.ERROR_SELECTORS_NOT_ALLOWED.create();
-            }
-        }
-
-        if (!sourceWeightPresent) return;
         try {
-            CompletableFuture.allOf(weightChecks).get();
+            allOf(selected.parallelStream().mapMulti((object, consumer) -> {
+                var selectedEntity = object;
+                if (selectedEntity instanceof Player selectedPlayer) {
+                    selectedEntity = selectedPlayer.getGameProfile();
+                }
+
+                if (selectedEntity instanceof Entity) {
+                    if (!entity) streamThrow();
+                } else if (selectedEntity instanceof GameProfile selectedPlayer) {
+                    if (selectedPlayer.equals(sourcePlayer)) {
+                        if (!self) streamThrow();
+                    } else {
+                        if (!player) streamThrow();
+                        if (!sourceWeightPresent) return;
+
+                        consumer.accept(get(selectedPlayer, weight, Integer::parseInt).thenAcceptAsync(selectedWeight -> {
+                            if (selectedWeight.isPresent() && selectedWeight.get() > sourceWeightValue) throw new CompletionException(ERROR_SELECTORS_NOT_ALLOWED.create());
+                        }));
+                    }
+                } else streamThrow();
+            }).toArray(CompletableFuture[]::new)).get();
         } catch (Exception e) {
             if (e.getCause() instanceof CommandSyntaxException exception) throw exception;
-            VanillaPermissionsMod.LOGGER.warn("Bad selector: {}", e);
-            throw EntityArgument.ERROR_SELECTORS_NOT_ALLOWED.create();
+            LOGGER.warn("Bad selector in command " + name, e);
+            throw ERROR_SELECTORS_NOT_ALLOWED.create();
         }
     }
 }

@@ -2,7 +2,6 @@ package me.drex.vanillapermissions.mixin.argument;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.drex.vanillapermissions.util.ArgumentPermission;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.world.entity.Entity;
@@ -12,7 +11,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collection;
-import java.util.Collections;
+
+import static me.drex.vanillapermissions.util.ArgumentPermission.validate;
+
+import static java.util.Collections.singleton;
 
 @Mixin(EntityArgument.class)
 public abstract class EntityArgumentMixin {
@@ -25,7 +27,7 @@ public abstract class EntityArgumentMixin {
         at = @At("RETURN")
     )
     private static void addEntityPermission(CommandContext<CommandSourceStack> commandContext, String string, CallbackInfoReturnable<Entity> cir) throws CommandSyntaxException {
-        ArgumentPermission.check(commandContext, Collections.singleton(cir.getReturnValue()));
+        validate(commandContext, singleton(cir.getReturnValue()));
     }
 
     @Inject(
@@ -38,6 +40,6 @@ public abstract class EntityArgumentMixin {
         at = @At("RETURN")
     )
     private static void addEntitiesPermission(CommandContext<CommandSourceStack> commandContext, String string, CallbackInfoReturnable<Collection<Entity>> cir) throws CommandSyntaxException {
-        ArgumentPermission.check(commandContext, cir.getReturnValue());
+        validate(commandContext, cir.getReturnValue());
     }
 }

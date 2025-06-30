@@ -2,7 +2,6 @@ package me.drex.vanillapermissions.mixin.argument;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.drex.vanillapermissions.util.ArgumentPermission;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.ScoreHolderArgument;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Collection;
 import java.util.function.Supplier;
 
+import static me.drex.vanillapermissions.util.ArgumentPermission.validate;
+
 @Mixin(ScoreHolderArgument.class)
 public abstract class ScoreHolderArgumentMixin {
 
@@ -21,6 +22,6 @@ public abstract class ScoreHolderArgumentMixin {
         at = @At("RETURN")
     )
     private static void addScoreHoldersPermission(CommandContext<CommandSourceStack> commandContext, String string, Supplier<Collection<?>> supplier, CallbackInfoReturnable<Collection<?>> cir) throws CommandSyntaxException {
-        ArgumentPermission.check(commandContext, cir.getReturnValue());
+        validate(commandContext, cir.getReturnValue());
     }
 }

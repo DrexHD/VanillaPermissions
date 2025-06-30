@@ -3,7 +3,6 @@ package me.drex.vanillapermissions.mixin.argument;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.drex.vanillapermissions.util.ArgumentPermission;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.WaypointArgument;
 import net.minecraft.world.entity.Entity;
@@ -13,7 +12,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Collections;
+import static me.drex.vanillapermissions.util.ArgumentPermission.validate;
+
+import static java.util.Collections.singleton;
 
 @Mixin(WaypointArgument.class)
 public abstract class WaypointArgumentMixin {
@@ -23,7 +24,7 @@ public abstract class WaypointArgumentMixin {
         at = @At("JUMP")
     )
     private static void addWaypointPermission(CommandContext<CommandSourceStack> commandContext, String string, CallbackInfoReturnable<WaypointTransmitter> cir, @Local Entity entity) throws CommandSyntaxException {
-        ArgumentPermission.check(commandContext, Collections.singleton(entity));
+        validate(commandContext, singleton(entity));
     }
 }
 //?} else {
