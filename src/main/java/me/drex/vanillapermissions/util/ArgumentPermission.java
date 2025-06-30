@@ -3,6 +3,7 @@ package me.drex.vanillapermissions.util;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.tree.RootCommandNode;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -34,7 +35,14 @@ public class ArgumentPermission {
         var source = context.getSource();
         if (!source.isPlayer()) return;
 
-        var name = build(source.getServer().getCommands().getDispatcher().getPath(context.getNodes().getLast().getNode()).toArray(String[]::new)); // > 1.21: source.getServer().getCommands().getDispatcher() -> source.dispatcher()
+        String[] parts;
+        if (context.getRootNode() instanceof RootCommandNode) {
+            parts = context.getNodes().parallelStream().map(node -> node.getNode().getName()).toArray(String[]::new);
+        } else {
+            parts = source.getServer().getCommands().getDispatcher().getPath(context.getNodes().getLast().getNode()).toArray(String[]::new); // > 1.21: source.getServer().getCommands().getDispatcher() -> source.dispatcher()
+        }
+        String name = build(parts);
+
         var limit = get(source, SELECTOR_LIMIT.formatted(name), Integer::parseInt);
         if (limit.isPresent() && limit.get() < selected.size()) throw ERROR_SELECTORS_NOT_ALLOWED.create();
 
