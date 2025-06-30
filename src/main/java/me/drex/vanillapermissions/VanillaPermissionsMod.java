@@ -37,12 +37,12 @@ public class VanillaPermissionsMod implements ModInitializer {
     }
 
     @SuppressWarnings("unchecked")
-    private void alterCommandChildNode(String path, CommandNode<CommandSourceStack> commandNode) {
-        LOGGER.debug("Alter command node {}", path);
+    private void alterCommandChildNode(String name, CommandNode<CommandSourceStack> commandNode) {
+        LOGGER.debug("Alter command node {}", name);
         for (CommandNode<CommandSourceStack> child : commandNode.getChildren()) {
-            alterCommandChildNode(build(path, child.getName()), child);
+            alterCommandChildNode(build(name, child.getName()), child);
         }
-        ((CommandNodeAccessor<CommandSourceStack>) commandNode).setRequirement(createPredicate(path, commandNode.getRequirement()));
+        ((CommandNodeAccessor<CommandSourceStack>) commandNode).setRequirement(createPredicate(name, commandNode.getRequirement()));
     }
 
     private Predicate<CommandSourceStack> createPredicate(String name, Predicate<CommandSourceStack> fallback) {
