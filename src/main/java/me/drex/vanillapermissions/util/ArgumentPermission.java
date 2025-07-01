@@ -78,7 +78,7 @@ public class ArgumentPermission {
                         }));
                     }
                 } else streamThrow();
-            }).toArray(CompletableFuture[]::new)).get();
+            }).unordered().toArray(CompletableFuture[]::new)).get();
         } catch (Exception e) {
             if (e.getCause() instanceof CommandSyntaxException exception) throw exception;
             LOGGER.warn("Bad selector in command " + name, e);
