@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.11] - 2025-07-10
+### Fixed
+- Gamemode switcher in 1.21.6+
+
 ## [0.2.10] - 2025-06-19
 ### Fixed
 - Entity selector issues on 1.21.6

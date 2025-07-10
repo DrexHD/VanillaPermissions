@@ -22,6 +22,7 @@
     "cached_permission.bypass.player_limit.DedicatedPlayerListMixin",
     "cached_permission.bypass.whitelist.DedicatedPlayerListMixin",
     "command.GameModeCommandMixin",
+    "command.ServerGamePacketListenerImplMixin",
     "debugchart.DebugSampleSubscriptionTrackerMixin",
     "debugstick.DebugStickItemMixin",
     "nbt.BlockItemMixin",
