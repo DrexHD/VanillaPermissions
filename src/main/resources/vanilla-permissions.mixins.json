@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "me.drex.vanillapermissions.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_${javaVersion}",
   "injectors": {
     "defaultRequire": 1
   },
@@ -38,9 +38,5 @@
     "operator_blocks.StructureBlockEntityMixin",
     "selector.EntitySelectorMixin",
     "selector.EntitySelectorParserMixin"
-  ],
-  "client": [
-    "client.GameModeSwitcherScreenMixin",
-    "client.KeyboardHandlerMixin"
   ]
 }
