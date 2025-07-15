@@ -12,6 +12,9 @@ import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
+//? if <= 1.20.6 {
+/* import static com.google.common.collect.Iterables.getLast;
+*///?}
 import static me.drex.vanillapermissions.VanillaPermissionsMod.LOGGER;
 import static me.drex.vanillapermissions.util.Permission.build;
 import static me.drex.vanillapermissions.util.Permission.SELECTOR_ENTITY;
@@ -39,7 +42,11 @@ public class ArgumentPermission {
         if (context.getRootNode() instanceof RootCommandNode) {
             parts = context.getNodes().parallelStream().map(node -> node.getNode().getName()).toArray(String[]::new);
         } else {
-            parts = source.getServer().getCommands().getDispatcher().getPath(context.getNodes().getLast().getNode()).toArray(String[]::new); // > 1.21: source.getServer().getCommands().getDispatcher() -> source.dispatcher()
+            //? if >= 1.21 {
+            parts = source.dispatcher().getPath(context.getNodes().getLast().getNode()).toArray(String[]::new);
+            //?} else {
+            /* parts = source.getServer().getCommands().getDispatcher().getPath(getLast(context.getNodes()).getNode()).toArray(String[]::new);
+            *///?}
         }
         String name = build(parts);
 
