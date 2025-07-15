@@ -1,4 +1,4 @@
-package me.drex.vanillapermissions.mixin.client;
+package me.drex.vanillapermissions.client.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.KeyboardHandler;

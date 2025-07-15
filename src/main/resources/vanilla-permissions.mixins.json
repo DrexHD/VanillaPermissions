@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "me.drex.vanillapermissions.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_${javaVersion}",
   "injectors": {
     "defaultRequire": 1
   },
@@ -26,6 +26,7 @@
     "cached_permission.bypass.player_limit.DedicatedPlayerListMixin",
     "cached_permission.bypass.whitelist.DedicatedPlayerListMixin",
     "command.GameModeCommandMixin",
+    "command.ServerGamePacketListenerImplMixin",
     "debugchart.DebugSampleSubscriptionTrackerMixin",
     "debugstick.DebugStickItemMixin",
     "nbt.BlockItemMixin",
@@ -41,9 +42,5 @@
     "operator_blocks.StructureBlockEntityMixin",
     "selector.EntitySelectorMixin",
     "selector.EntitySelectorParserMixin"
-  ],
-  "client": [
-    "client.GameModeSwitcherScreenMixin",
-    "client.KeyboardHandlerMixin"
   ]
 }

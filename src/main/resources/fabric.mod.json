@@ -29,7 +29,11 @@
     }
   },
   "mixins": [
-    "vanilla-permissions.mixins.json"
+    "vanilla-permissions.mixins.json",
+    {
+      "config": "vanilla-permissions.client.mixins.json",
+      "environment": "client"
+    }
   ],
   "accessWidener": "vanilla-permissions.accesswidener",
   "depends": {

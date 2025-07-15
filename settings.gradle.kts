@@ -1,9 +1,6 @@
 pluginManagement {
     repositories {
-        maven {
-            name = 'Fabric'
-            url = 'https://maven.fabricmc.net/'
-        }
+        maven("https://maven.fabricmc.net/")
         mavenCentral()
         gradlePluginPortal()
     }
@@ -15,7 +12,7 @@ plugins {
 
 stonecutter {
     create(rootProject) {
-        versions("1.21.6", "1.21.5", "1.21.4", "1.21.1", "1.20.1")
-        vcsVersion = "1.21.6"
+        versions("1.21.7", "1.21.5", "1.21.4", "1.21.1", "1.20.1")
+        vcsVersion = "1.21.7"
     }
 }
