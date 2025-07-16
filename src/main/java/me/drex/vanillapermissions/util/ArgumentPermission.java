@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 //? if <= 1.20.6 {
-/* import static com.google.common.collect.Iterables.getLast;
+ /*import static com.google.common.collect.Iterables.getLast;
 *///?}
 import static me.drex.vanillapermissions.VanillaPermissionsMod.LOGGER;
 import static me.drex.vanillapermissions.util.Permission.build;
@@ -30,10 +30,6 @@ import static java.util.concurrent.CompletableFuture.allOf;
 
 public class ArgumentPermission {
 
-    private static void streamThrow() throws RuntimeException {
-        throw new RuntimeException(ERROR_SELECTORS_NOT_ALLOWED.create());
-    }
-
     public static void validate(CommandContext<CommandSourceStack> context, Collection<?> selected) throws CommandSyntaxException {
         var source = context.getSource();
         if (!source.isPlayer()) return;
@@ -45,7 +41,7 @@ public class ArgumentPermission {
             //? if >= 1.21 {
             parts = source.dispatcher().getPath(context.getNodes().getLast().getNode()).toArray(String[]::new);
             //?} else {
-            /* parts = source.getServer().getCommands().getDispatcher().getPath(getLast(context.getNodes()).getNode()).toArray(String[]::new);
+             /*parts = source.getServer().getCommands().getDispatcher().getPath(getLast(context.getNodes()).getNode()).toArray(String[]::new);
             *///?}
         }
         String name = build(parts);
@@ -91,5 +87,9 @@ public class ArgumentPermission {
             LOGGER.warn("Bad selector in command " + name, e);
             throw ERROR_SELECTORS_NOT_ALLOWED.create();
         }
+    }
+
+    private static void streamThrow() throws RuntimeException {
+        throw new RuntimeException(ERROR_SELECTORS_NOT_ALLOWED.create());
     }
 }
