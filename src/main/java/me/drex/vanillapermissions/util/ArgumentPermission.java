@@ -30,7 +30,7 @@ import static java.util.concurrent.CompletableFuture.allOf;
 
 public class ArgumentPermission {
 
-    public static void validate(CommandContext<CommandSourceStack> context, Collection<?> selected) throws CommandSyntaxException {
+    public static void validate(CommandContext<CommandSourceStack> context, String selector, Collection<?> selected) throws CommandSyntaxException {
         var source = context.getSource();
         if (!source.isPlayer()) return;
 
@@ -44,7 +44,7 @@ public class ArgumentPermission {
              /*parts = source.getServer().getCommands().getDispatcher().getPath(getLast(context.getNodes()).getNode()).toArray(String[]::new);
             *///?}
         }
-        String name = build(parts);
+        String name = build(parts[0], selector, build(1, parts.length, parts));
 
         var limit = get(source, SELECTOR_LIMIT.formatted(name), Integer::parseInt);
         if (limit.isPresent() && limit.get() < selected.size()) throw ERROR_SELECTORS_NOT_ALLOWED.create();

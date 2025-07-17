@@ -21,10 +21,10 @@ public abstract class WaypointArgumentMixin {
 
     @Inject(
         method = "getWaypoint",
-        at = @At("JUMP")
+        at = @At("RETURN")
     )
     private static void addWaypointPermission(CommandContext<CommandSourceStack> commandContext, String string, CallbackInfoReturnable<WaypointTransmitter> cir, @Local Entity entity) throws CommandSyntaxException {
-        validate(commandContext, singleton(entity));
+        validate(commandContext, string, singleton(entity));
     }
 }
 //?} else {

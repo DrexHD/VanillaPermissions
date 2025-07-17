@@ -8,25 +8,25 @@ This mod adds permission checks into vanilla, to allow for full permission custo
 
 ## Permissions
 
-| Permission                                                                                | Description                                                                                 |
-|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| `minecraft.adminbroadcast.receive`                                                        | Receive command feedback                                                                    |
-| `minecraft.bypass.spawn-protection`                                                       | Build inside spawn protection                                                               |
-| `minecraft.bypass.force-gamemode`                                                         | Bypass forced gamemode                                                                      |
-| `minecraft.bypass.move-speed.player`                                                      | Bypass "Player moved too fast"                                                              |
-| `minecraft.bypass.move-speed.vehicle.<entity>`                                            | Bypass "Player moved too fast", while riding an `entity` (e.g `minecraft.boat`)             |
-| `minecraft.bypass.chat-speed`                                                             | Bypass chat kick, when sending messages / commands to quick                                 |
-| `minecraft.bypass.whitelist`                                                              | Bypass server whitelist                                                                     |
-| `minecraft.bypass.player-limit`                                                           | Bypass server player limit                                                                  |
-| [`minecraft.command.<command>`](#commands)                                                | Command permissions, see [commands](#commands) for more information                         |
-| `minecraft.debug_stick.use.<block>`                                                       | Use debug stick on `block` (e.g. `minecraft.oak_trapdoor`)                                  |
-| `minecraft.debug_chart`                                                                   | View debug chart                                                                            |
-| `minecraft.<query/load>.<entity/block>`                                                   | Place blocks with nbt data and use debug commands                                           |
-| `minecraft.operator_block.<command_block/jigsaw/structure_block>.<place/view/edit/break>` | Place, view, edit and break operator blocks.                                                |
-| `minecraft.selector`                                                                      | Use entity selectors in commands                                                            |
-| [`minecraft.selector.entity.<command>.<selector>`](#selectors)                            | Allow selecting [non-player entities](#scope-control) using the `selector` within `command` |
-| [`minecraft.selector.player.<command>.<selector>`](#selectors)                            | Allow selecting [nonself players](#scope-control) using the `selector` within `command`     |
-| [`minecraft.selector.self.<command>.<selector>`](#selectors)                              | Allow selecting [self](#scope-control) using the `selector` within `command`                |
+| Permission                                                                                | Description                                                                     |
+|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| `minecraft.adminbroadcast.receive`                                                        | Receive command feedback                                                        |
+| `minecraft.bypass.spawn-protection`                                                       | Build inside spawn protection                                                   |
+| `minecraft.bypass.force-gamemode`                                                         | Bypass forced gamemode                                                          |
+| `minecraft.bypass.move-speed.player`                                                      | Bypass "Player moved too fast"                                                  |
+| `minecraft.bypass.move-speed.vehicle.<entity>`                                            | Bypass "Player moved too fast", while riding an `entity` (e.g `minecraft.boat`) |
+| `minecraft.bypass.chat-speed`                                                             | Bypass chat kick, when sending messages / commands to quick                     |
+| `minecraft.bypass.whitelist`                                                              | Bypass server whitelist                                                         |
+| `minecraft.bypass.player-limit`                                                           | Bypass server player limit                                                      |
+| [`minecraft.command.<command>`](#commands)                                                | Command permissions, see [commands](#commands) for more information             |
+| `minecraft.debug_stick.use.<block>`                                                       | Use debug stick on `block` (e.g. `minecraft.oak_trapdoor`)                      |
+| `minecraft.debug_chart`                                                                   | View debug chart                                                                |
+| `minecraft.<query/load>.<entity/block>`                                                   | Place blocks with nbt data and use debug commands                               |
+| `minecraft.operator_block.<command_block/jigsaw/structure_block>.<place/view/edit/break>` | Place, view, edit and break operator blocks.                                    |
+| `minecraft.selector`                                                                      | Use entity selectors in commands                                                |
+| [`minecraft.selector.entity.<selector>`](#selectors)                                      | Allow selecting [non-player entities](#scope-control) using the `selector`      |
+| [`minecraft.selector.player.<selector>`](#selectors)                                      | Allow selecting [nonself players](#scope-control) using the `selector`          |
+| [`minecraft.selector.self.<selector>`](#selectors)                                        | Allow selecting [self](#scope-control) using the `selector`                     |
 
 ## Meta
 
@@ -34,10 +34,10 @@ Also sometimes referred to as "options" or "variables".
 
 Incorrect types are considered undefined values.
 
-| Meta                                                           | Type      | Description                                                                                                      |
-|----------------------------------------------------------------|-----------|------------------------------------------------------------------------------------------------------------------|
-| [`minecraft.selector.limit.<command>.<selector>`](#selectors)  | `Integer` | [Limit the maximum number](#entity-limit) of entities that can be selected using the `selector` within `command` |
-| [`minecraft.selector.weight.<command>.<selector>`](#selectors) | `Integer` | Selector weight, see [selection weight](#selection-weight) for more infomation                                   |
+| Meta                                                 | Type      | Description                                                                                     |
+|------------------------------------------------------|-----------|-------------------------------------------------------------------------------------------------|
+| [`minecraft.selector.limit.<selector>`](#selectors)  | `Integer` | [Limit the maximum number](#entity-limit) of entities that can be selected using the `selector` |
+| [`minecraft.selector.weight.<selector>`](#selectors) | `Integer` | Selector weight, see [selection weight](#selection-weight) for more infomation                  |
 
 ## Commands
 
@@ -67,6 +67,8 @@ If you want finer control, you can manually restrict sub-nodes by denying their 
 This allows players to use `/gamemode` but restricts them to only the allowed sub-options
 (e.g., survival and adventure).
 
+For other commands, see *Syntax* section of each command's Minecraft Wiki page.
+
 ## Selectors
 
 Command blocks and datapacks bypass all selector permission checks.
@@ -77,50 +79,97 @@ Fine-grained permission control operates as follows. Note that this mod restrict
 raw selector syntax. Using player names, UUIDs, or selectors like `@e` are equivalent if they produce identical
 results.
 
-### Value of `selector`
+### Value of `<selector>`
 
-Defined in the *Arguments* section of each command's Minecraft Wiki page.
+The `<selector>` string follows the format: `<command_name>.<selector_name>.<subsequent_arguments>` where:
+* `<command_name>` is the root command name
+* `<selector_name>` matches the argument name in the command's *Arguments* section on Minecraft Wiki
+* `<subsequent_arguments>` traces the command's argument hierarchy after the selector
 
-For example, the [`/teleport`](https://minecraft.wiki/w/Commands/teleport#Arguments 'Minecraft Wiki') command uses
-`<targets>` and `<destination>` as selectors.
+For example, in the [`/teleport`](https://minecraft.wiki/w/Commands/teleport#Arguments) command:
+- `<targets>` and `<destination>` are valid selector names
+- Subsequent arguments form the remainder of the path
+
+#### Example
+
+| Command              | Syntax (See Minecraft Wiki)        | Selector to Control | `<selector>` Construction                  |
+|----------------------| -----------------------------------|---------------------|--------------------------------------------|
+| `/teleport @e @s`    | `teleport <targets> <destination>` | `@e`                | `teleport.targets.targets.destination`     |
+| `/teleport @e @s`    | `teleport <targets> <destination>` | `@s`                | `teleport.destination.targets.destination` |
+| `/teleport @e ~ ~ ~` | `teleport <targets> <location>`    | `@e`                | `teleport.targets.targets.location`        |
+
+#### Wildcard Support
+
+Selector permissions can be lengthy. Luckily you can use wildcards, like `teleport.*` to cover all teleport command
+selectors.
+
+However, Luckperms doesn't support wildcard for metadata. You could install
+[this mod](https://modrinth.com/mod/metadatawildcard4fabric-permissions-api 'Metadata Wildcard for fabric-permissions-api')
+to enable it.
 
 ### Scope Control
 
 Use these permissions to define selector scope:
 
-- `minecraft.selector.entity.<command>.<selector>`
-- `minecraft.selector.player.<command>.<selector>`
-- `minecraft.selector.self.<command>.<selector>`
+* `minecraft.selector.entity.<selector>`
+* `minecraft.selector.player.<selector>`
+* `minecraft.selector.self.<selector>`
 
-Commands fail if a player attempts to select unauthorized entities.
+Commands fail if a player attempts to select unauthorized entities. All three scopes are allowed by default.
 
-#### Example
+#### Simple Example
 
 ```yml
+- Implicitly Allow:
+  minecraft.selector.self.*
 - Allow:
-  minecraft.command.teleport
+  minecraft.command.waypoint
   minecraft.selector
-  minecraft.selector.self.teleport.targets
-  minecraft.selector.entity.teleport.targets
-  minecraft.selector.self.teleport.destination
-  minecraft.selector.player.teleport.destination
-- Deny:
-  minecraft.selector.*
+- Deny (was implicitly allowed):
+  minecraft.selector.player.waypoint.*
+  minecraft.selector.entity.waypoint.*
 ```
 
-Players may teleport themselves (`self` for `targets`) or non-player entities (`entity` for `targets`) to themselves
-(`self` for `destination`) or nonself players (`player` for `destination`).
+Players modify only their own waypoints.
+
+#### Complex Example
+
+```yml
+- Implicitly Allow:
+  minecraft.selector.self.* #0
+- Allow:
+  minecraft.command.teleport # /teleport
+  minecraft.selector # All selectors
+  minecraft.selector.player.teleport.destination.destination #1
+  minecraft.selector.entity.teleport.destination.destination #2
+  minecraft.selector.entity.teleport.targets.targets.destination #3
+  minecraft.selector.player.teleport.facingEntity.* #4
+- Deny (was implicitly allowed):
+  minecraft.selector.entity.* #5
+  minecraft.selector.player.teleport.* #6
+  minecraft.selector.self.teleport.facingEntity.* #7
+```
+
+Command Behavior:
+
+| Command                                                       | Allowing Permissions                              | Blocking Permissions                    | Resulting Behavior                                      |
+|---------------------------------------------------------------|---------------------------------------------------|-----------------------------------------|---------------------------------------------------------|
+| `/teleport <destination>`                                     | #0 (self)<br>#1 (player dest)<br>#2 (entity dest) | -                                       | Teleport to any entity                                  |
+| `/teleport <targets> <destination>`                           | #0 (self)<br>#3 (non-player dest)                 | #6 (player targets)                     | Only teleport non-player entities to self               |
+| `/teleport <location>`                                        | (No selectors)                                    | -                                       | Unrestricted position teleport                          |
+| `/teleport <targets> <location>`                              | #0 (self)                                         | #5 (entities)<br>#6 (players)           | Only teleport self to positions                         |
+| `/teleport <targets> <location> facing entity <facingEntity>` | #0 (self)<br>#4 (facing players)                  | #5 (entities)<br>#7 (self-facing)       | Teleport self to positions while facing nonself players |
 
 ### Entity Limit
 
-Set meta `minecraft.selector.limit.<command>.<selector>` to restrict the maximum number of entities selectable via a
+Set meta `minecraft.selector.limit.<selector>` to restrict the maximum number of entities selectable via a
 given selector.
 
 No limit is applied if this meta is unset.
 
 ### Selection Weight
 
-Controlled by meta `minecraft.selector.weight.<command>.<selector>`.
+Controlled by meta `minecraft.selector.weight.<selector>`.
 
 Entities without weight settings can always select any target and be selected by any selector. When both entities have
 weight values, a selector can only select targets whose weight is `less than or equal` to its own.
@@ -132,14 +181,10 @@ weight values, a selector can only select targets whose weight is `less than or 
 - Allow:
   minecraft.command.gamemode
   minecraft.selector
-  minecraft.selector.self.gamemode.target
-  minecraft.selector.player.gamemode.target
-- Deny:
-  minecraft.selector.*
 # Player-specific metadata
-Player1: minecraft.selector.weight.gamemode.target = 7
-Player2: minecraft.selector.weight.gamemode.target = -1
-Player3: minecraft.selector.weight.gamemode.target = 7
+Player1: minecraft.selector.weight.gamemode.* = 7
+Player2: minecraft.selector.weight.gamemode.* = -1
+Player3: minecraft.selector.weight.gamemode.* = 7
 Player4: (no weight set)
 ```
 

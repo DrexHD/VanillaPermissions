@@ -22,6 +22,6 @@ public abstract class ScoreHolderArgumentMixin {
         at = @At("RETURN")
     )
     private static void addScoreHoldersPermission(CommandContext<CommandSourceStack> commandContext, String string, Supplier<Collection<?>> supplier, CallbackInfoReturnable<Collection<?>> cir) throws CommandSyntaxException {
-        validate(commandContext, cir.getReturnValue());
+        validate(commandContext, string, cir.getReturnValue());
     }
 }

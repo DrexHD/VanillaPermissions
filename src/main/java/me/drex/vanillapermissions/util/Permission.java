@@ -2,6 +2,8 @@ package me.drex.vanillapermissions.util;
 
 import net.minecraft.resources.ResourceLocation;
 
+import static org.apache.commons.lang3.StringUtils.join;
+
 public class Permission {
 
     public static final String ADMIN_BROADCAST_RECEIVE = permission("adminbroadcast.receive");
@@ -36,6 +38,10 @@ public class Permission {
 
     public static String build(String... parts) {
         return String.join(".", parts);
+    }
+
+    public static String build(int startIndex, int endIndex, String... parts) {
+        return join(parts, '.', startIndex, endIndex);
     }
 
 }
