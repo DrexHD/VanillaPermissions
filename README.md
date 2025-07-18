@@ -57,9 +57,9 @@ If you want finer control, you can manually restrict sub-nodes by denying their 
 #### Example
 
 ```yml
-- Allow:
+Allow:
   minecraft.command.gamemode
-- Deny:
+Deny:
   minecraft.command.gamemode.creative
   minecraft.command.gamemode.spectator
 ```
@@ -120,12 +120,12 @@ Commands fail if a player attempts to select unauthorized entities. All three sc
 #### Simple Example
 
 ```yml
-- Implicitly Allow:
-  minecraft.selector.self.*
-- Allow:
+Implicitly Allow by default:
+  minecraft.selector.*
+Allow:
   minecraft.command.waypoint
   minecraft.selector
-- Deny (was implicitly allowed):
+Deny:
   minecraft.selector.player.waypoint.*
   minecraft.selector.entity.waypoint.*
 ```
@@ -135,30 +135,30 @@ Players modify only their own waypoints.
 #### Complex Example
 
 ```yml
-- Implicitly Allow:
-  minecraft.selector.self.* #0
-- Allow:
+Implicitly Allow by default:
+  minecraft.selector.* #0
+Allow:
   minecraft.command.teleport # /teleport
   minecraft.selector # All selectors
   minecraft.selector.player.teleport.destination.destination #1
   minecraft.selector.entity.teleport.destination.destination #2
   minecraft.selector.entity.teleport.targets.targets.destination #3
   minecraft.selector.player.teleport.facingEntity.* #4
-- Deny (was implicitly allowed):
-  minecraft.selector.entity.* #5
+Deny:
   minecraft.selector.player.teleport.* #6
+  minecraft.selector.entity.* #5
   minecraft.selector.self.teleport.facingEntity.* #7
 ```
 
 Command Behavior:
 
-| Command                                                       | Allowing Permissions                              | Blocking Permissions                    | Resulting Behavior                                      |
-|---------------------------------------------------------------|---------------------------------------------------|-----------------------------------------|---------------------------------------------------------|
-| `/teleport <destination>`                                     | #0 (self)<br>#1 (player dest)<br>#2 (entity dest) | -                                       | Teleport to any entity                                  |
-| `/teleport <targets> <destination>`                           | #0 (self)<br>#3 (non-player dest)                 | #6 (player targets)                     | Only teleport non-player entities to self               |
-| `/teleport <location>`                                        | (No selectors)                                    | -                                       | Unrestricted position teleport                          |
-| `/teleport <targets> <location>`                              | #0 (self)                                         | #5 (entities)<br>#6 (players)           | Only teleport self to positions                         |
-| `/teleport <targets> <location> facing entity <facingEntity>` | #0 (self)<br>#4 (facing players)                  | #5 (entities)<br>#7 (self-facing)       | Teleport self to positions while facing nonself players |
+| Command                                                       | Self                                                       | Nonself Players                                            | Non-player Entities                                       | Resulting Behavior                                      |
+|---------------------------------------------------------------|------------------------------------------------------------|------------------------------------------------------------|-----------------------------------------------------------|---------------------------------------------------------|
+| `/teleport <destination>`                                     | `<destination>` allowed by #𝟎                              | `<destination>` allowed by #𝟏                              | `<destination>` allowed by #𝟐                             | Teleport to any entity                                  |
+| `/teleport <targets> <destination>`                           | `<targets>` allowed by #𝟎<br>`<destination>` allowed by #𝟎 | `<targets>` denied by #𝟓<br>`<destination>` denied by #𝟓   | `<targets>` allowed by #𝟑<br>`<destination>` denied by #𝟔 | Only teleport non-player entities to self               |
+| `/teleport <location>`                                        | (No selectors)                                             | -                                                          | -                                                         | Unrestricted position teleport                          |
+| `/teleport <targets> <location>`                              | `<targets>` allowed by #𝟎                                  | `<targets>` denied by #𝟓                                   | `<targets>` denied by #𝟔                                  | Only teleport self to positions                         |
+| `/teleport <targets> <location> facing entity <facingEntity>` | `<targets>` allowed by #𝟎<br>`<facingEntity>` denied by #𝟕 | `<targets>` denied by #𝟓<br>`<facingEntity>` allowed by #𝟒 | `<targets>` denied by #𝟔<br>`<facingEntity>` denied by #𝟔 | Teleport self to positions while facing nonself players |
 
 ### Entity Limit
 
@@ -178,7 +178,7 @@ weight values, a selector can only select targets whose weight is `less than or 
 
 ```yml
 # Global permissions
-- Allow:
+Allow:
   minecraft.command.gamemode
   minecraft.selector
 # Player-specific metadata
