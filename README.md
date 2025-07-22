@@ -104,8 +104,8 @@ Selector permissions can be lengthy. Luckily you can use wildcards, like `telepo
 selectors.
 
 However, Luckperms doesn't support wildcard for metadata. You could install
-[this mod](https://modrinth.com/mod/metadatawildcard4fabric-permissions-api 'Metadata Wildcard for fabric-permissions-api')
-to enable it.
+[this mod](https://modrinth.com/mod/metadatawildcard4fabric-permissions-api
+'Metadata Wildcard for fabric-permissions-api') to enable it.
 
 ### Scope Control
 
@@ -172,6 +172,9 @@ Entities without weight settings can always select any target and be selected by
 weight values, a selector can only select targets whose weight is `less than or equal` to its own.
 
 #### Example
+
+You need to install [this mod](https://modrinth.com/mod/metadatawildcard4fabric-permissions-api
+'Metadata Wildcard for fabric-permissions-api') first.
 
 ```yml
 # Global permissions
