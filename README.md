@@ -88,7 +88,11 @@ The `<selector>` string follows the format: `<command_name>.<selector_name>.<sub
 
 For example, in the [`/teleport`](https://minecraft.wiki/w/Commands/teleport#Arguments) command:
 - `<targets>` and `<destination>` are valid selector names
+  (they are [`entity`](https://minecraft.wiki/w/Argument_types#minecraft:entity) selectors)
 - Subsequent arguments form the remainder of the path
+
+Most selectors are [`entity`](https://minecraft.wiki/w/Argument_types#minecraft:entity) selectors, which is supported.
+For a complete support list, see [below](#status).
 
 #### Example
 
@@ -195,15 +199,21 @@ Player4: (no weight set)
 | Player3 | All players              | Weight ($7$) ≥ all others' weights                                         |
 | Player4 | All players              | No weight restriction → unrestricted access                                |
 
-### Limitation
+### Status
 
-Selectors in chat message (e.g. `/me`) bypass fine-grained permissions.
+The following list shows which selectors can use fine-grained permissions:
 
-Players without all three scopes cannot do `/scoreboard` on offline players.
+* [`/ban-ip`](https://minecraft.wiki/w/Commands/ban#ban-ip): Not supported
 
-With all three scopes, players doing `/scoreboard` on offline players bypass selection weight.
+* [`entity`](https://minecraft.wiki/w/Argument_types#minecraft:entity 'Most cases'): Fully supported
 
-`/ban-ip` bypasses all selector permission checks.
+* [`game_profile`](https://minecraft.wiki/w/Argument_types#minecraft:game_profile 'e.g. /ban'):
+  [Selection Weight](#selection-weight) for offline players not supported in Minecraft < 1.21.6. Others fully supported
+
+* [`message`](https://minecraft.wiki/w/Argument_types#minecraft:message 'e.g. /say'): Not supported
+
+* [`score_holder`](https://minecraft.wiki/w/Argument_types#minecraft:score_holder '/scoreboard and /team'):
+  Only [Entity Limit](#entity-limit) supported
 
 ## Quality of Life
 

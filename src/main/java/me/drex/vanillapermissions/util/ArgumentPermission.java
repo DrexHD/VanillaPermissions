@@ -27,6 +27,9 @@ import static me.lucko.fabric.api.permissions.v0.Permissions.check;
 import static net.minecraft.commands.arguments.EntityArgument.ERROR_SELECTORS_NOT_ALLOWED;
 
 import static java.util.concurrent.CompletableFuture.allOf;
+//? if <= 1.21.5 {
+ /*import static java.util.concurrent.CompletableFuture.failedFuture;
+*///?}
 
 public class ArgumentPermission {
 
@@ -44,7 +47,7 @@ public class ArgumentPermission {
              /*parts = source.getServer().getCommands().getDispatcher().getPath(getLast(context.getNodes()).getNode()).toArray(String[]::new);
             *///?}
         }
-        String name = build(parts[0], selector, build(1, parts.length, parts));
+        var name = build(parts[0], selector, build(1, parts.length, parts));
 
         var limit = get(source, SELECTOR_LIMIT.formatted(name), Integer::parseInt);
         if (limit.isPresent() && limit.get() < selected.size()) throw ERROR_SELECTORS_NOT_ALLOWED.create();
@@ -76,9 +79,18 @@ public class ArgumentPermission {
                         if (!player) streamThrow();
                         if (!sourceWeightPresent) return;
 
+                        //? if >= 1.21.6 {
                         consumer.accept(get(selectedPlayer, weight, Integer::parseInt).thenAcceptAsync(selectedWeight -> {
                             if (selectedWeight.isPresent() && selectedWeight.get() > sourceWeightValue) throw new CompletionException(ERROR_SELECTORS_NOT_ALLOWED.create());
                         }));
+                        //?} else {
+                        /*if (object instanceof Player onlinePlayer) {
+                            var selectedWeight = get(onlinePlayer, weight, Integer::parseInt);
+                            if (selectedWeight.isPresent() && selectedWeight.get() > sourceWeightValue) {
+                                consumer.accept(failedFuture(new CompletionException(ERROR_SELECTORS_NOT_ALLOWED.create())));
+                            }
+                        }
+                        *///?}
                     }
                 } else streamThrow();
             }).unordered().toArray(CompletableFuture[]::new)).get();
