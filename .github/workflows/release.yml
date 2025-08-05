@@ -14,7 +14,7 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Publish mods
-        run: ./gradlew chiseledPublishMods
+        run: ./gradlew publishMods
         env:
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
