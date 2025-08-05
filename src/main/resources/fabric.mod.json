@@ -42,6 +42,7 @@
     "fabric-permissions-api-v0": "*"
   },
   "suggests": {
-    "luckperms": "*"
+    "luckperms": "*",
+    "metadatawildcard4fabric-permissions-api": "*"
   }
 }

@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-08-05
+### Added
+- Fine-grained selector permission
+- Selector weights
+- Selector limits
+
 ## [0.2.11] - 2025-07-10
 ### Fixed
 - Gamemode switcher in 1.21.6+
@@ -52,6 +58,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Using wrong fallback command node requirement
+
+### Changed
+- `minecraft.command.<command>.*` are granted by default
 
 ## [0.2.1] - 2023-07-01
 ### Fixed

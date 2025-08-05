@@ -1,6 +1,7 @@
 package me.drex.vanillapermissions.util;
 
 import net.minecraft.resources.ResourceLocation;
+import org.apache.commons.lang3.StringUtils;
 
 public class Permission {
 
@@ -24,6 +25,11 @@ public class Permission {
     public static final String OPERATOR_BLOCK_EDIT = permission("operator_block.%s.edit");
     public static final String OPERATOR_BLOCK_BREAK = permission("operator_block.%s.break");
     public static final String SELECTOR = permission("selector");
+    public static final String SELECTOR_ENTITY = permission("selector.entity.%s");
+    public static final String SELECTOR_PLAYER = permission("selector.player.%s");
+    public static final String SELECTOR_SELF = permission("selector.self.%s");
+    public static final String SELECTOR_LIMIT = permission("selector.limit.%s");
+    public static final String SELECTOR_WEIGHT = permission("selector.weight.%s");
 
     protected static String permission(String permission) {
         return build(ResourceLocation.DEFAULT_NAMESPACE, permission);
@@ -31,6 +37,10 @@ public class Permission {
 
     public static String build(String... parts) {
         return String.join(".", parts);
+    }
+
+    public static String build(int startIndex, int endIndex, String... parts) {
+        return StringUtils.join(parts, '.', startIndex, endIndex);
     }
 
 }
