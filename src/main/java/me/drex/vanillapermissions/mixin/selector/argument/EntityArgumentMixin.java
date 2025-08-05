@@ -1,4 +1,4 @@
-package me.drex.vanillapermissions.mixin.argument;
+package me.drex.vanillapermissions.mixin.selector.argument;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

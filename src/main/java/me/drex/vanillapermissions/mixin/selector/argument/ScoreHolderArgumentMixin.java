@@ -1,27 +1,27 @@
-package me.drex.vanillapermissions.mixin.argument;
+package me.drex.vanillapermissions.mixin.selector.argument;
 
-import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.arguments.GameProfileArgument;
+import net.minecraft.commands.arguments.ScoreHolderArgument;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collection;
+import java.util.function.Supplier;
 
 import static me.drex.vanillapermissions.util.ArgumentPermission.validate;
 
-@Mixin(GameProfileArgument.class)
-public abstract class GameProfileArgumentMixin {
+@Mixin(ScoreHolderArgument.class)
+public abstract class ScoreHolderArgumentMixin {
 
     @Inject(
-        method = "getGameProfiles",
+        method = "getNames(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;Ljava/util/function/Supplier;)Ljava/util/Collection;",
         at = @At("RETURN")
     )
-    private static void addGameProfilesPermission(CommandContext<CommandSourceStack> commandContext, String string, CallbackInfoReturnable<Collection<GameProfile>> cir) throws CommandSyntaxException {
+    private static void addScoreHoldersPermission(CommandContext<CommandSourceStack> commandContext, String string, Supplier<Collection<?>> supplier, CallbackInfoReturnable<Collection<?>> cir) throws CommandSyntaxException {
         validate(commandContext, string, cir.getReturnValue());
     }
 }

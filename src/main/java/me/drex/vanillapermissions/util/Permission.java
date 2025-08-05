@@ -1,8 +1,7 @@
 package me.drex.vanillapermissions.util;
 
 import net.minecraft.resources.ResourceLocation;
-
-import static org.apache.commons.lang3.StringUtils.join;
+import org.apache.commons.lang3.StringUtils;
 
 public class Permission {
 
@@ -41,7 +40,7 @@ public class Permission {
     }
 
     public static String build(int startIndex, int endIndex, String... parts) {
-        return join(parts, '.', startIndex, endIndex);
+        return StringUtils.join(parts, '.', startIndex, endIndex);
     }
 
 }

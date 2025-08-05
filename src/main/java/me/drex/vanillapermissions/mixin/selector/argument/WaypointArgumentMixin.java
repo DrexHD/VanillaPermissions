@@ -1,4 +1,4 @@
-package me.drex.vanillapermissions.mixin.argument;
+package me.drex.vanillapermissions.mixin.selector.argument;
 //? if >= 1.21.6 {
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.brigadier.context.CommandContext;
