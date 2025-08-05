@@ -48,7 +48,7 @@ dependencies {
 
 publishMods {
     file.set(tasks.remapJar.get().archiveFile)
-    type.set(STABLE)
+    type.set(BETA)
     changelog.set(fetchChangelog())
 
     displayName = "VanillaPermissions ${version.get()}"
