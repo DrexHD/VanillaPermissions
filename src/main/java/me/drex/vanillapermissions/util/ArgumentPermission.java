@@ -5,9 +5,12 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.RootCommandNode;
+import me.drex.vanillapermissions.mixin.CommandSourceStackAccessor;
 import me.lucko.fabric.api.permissions.v0.Options;
 import me.lucko.fabric.api.permissions.v0.Permissions;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
@@ -23,7 +26,23 @@ public class ArgumentPermission {
 
     public static void validate(CommandContext<CommandSourceStack> context, String selector, Collection<?> selected) throws CommandSyntaxException {
         var source = context.getSource();
-        if (!source.isPlayer()) return;
+
+        // Check whether the original source was a player
+        CommandSource commandSource = ((CommandSourceStackAccessor) source).getSource();
+        ServerPlayer attachedPlayer = source.getPlayer();
+        if (attachedPlayer == null) {
+            return;
+        }
+        //? if >= 1.21.2 {
+        //The /execute command should not be accessible to players who should have limited selector access.
+        if (attachedPlayer.commandSource() != commandSource) {
+            return;
+        }
+        //?} else {
+        /*if (!(commandSource instanceof ServerPlayer)) {
+            return;
+        }
+        *///?}
 
         String[] parts;
         if (context.getRootNode() instanceof RootCommandNode) {
@@ -46,7 +65,7 @@ public class ArgumentPermission {
         if (entity && player && self && !sourceWeightPresent) return;
         var sourceWeightValue = sourceWeight.orElse(0);
 
-        var sourcePlayer = source.getPlayer().getGameProfile();
+        var sourcePlayer = attachedPlayer.getGameProfile();
         try {
             CompletableFuture.allOf(selected.stream().mapMulti((object, consumer) -> {
                 var selectedEntity = object;
