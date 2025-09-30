@@ -1,10 +1,14 @@
 package me.drex.vanillapermissions.mixin.cached_permission.bypass.whitelist;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.mojang.authlib.GameProfile;
 import me.drex.vanillapermissions.util.JoinCache;
 import me.drex.vanillapermissions.util.Permission;
 import net.minecraft.server.dedicated.DedicatedPlayerList;
+//? if >= 1.21.9-rc1 {
+import net.minecraft.server.players.NameAndId;
+//?} else {
+/*import com.mojang.authlib.GameProfile;
+*///?}
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -15,11 +19,11 @@ public abstract class DedicatedPlayerListMixin {
         method = "isWhiteListed",
         at = @At("RETURN")
     )
-    public boolean addBypassWhitelistPermission(boolean original, GameProfile gameProfile) {
-        if(original) {
+    public boolean addBypassWhitelistPermission(boolean original, /*? if >= 1.21.9-rc1 {*/ NameAndId /*?} else {*/ /*GameProfile *//*?}*/ nameAndId) {
+        if (original) {
             return true;
         }
-        return JoinCache.getCachedPermissions(gameProfile.getId(), Permission.BYPASS_WHITELIST).orElse(false);
+        return JoinCache.getCachedPermissions(nameAndId./*? if >= 1.21.9-rc1 {*/ id() /*?} else {*/ /*getId() *//*?}*/, Permission.BYPASS_WHITELIST).orElse(false);
     }
 
 }

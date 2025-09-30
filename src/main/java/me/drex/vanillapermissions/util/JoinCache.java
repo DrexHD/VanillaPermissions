@@ -37,13 +37,21 @@ public class JoinCache {
         ServerLoginConnectionEvents.QUERY_START.register(CHECK_PERMISSIONS, (handler, server, sender, synchronizer) -> {
             GameProfile profile = ((ServerLoginPacketListenerImplAccessor) handler).getAuthenticatedProfile();
             HashMap<String, TriState> cachedPermissions = new HashMap<>();
-            JoinCache.cachedPermissions.put(profile.getId(), cachedPermissions);
+            //? if >= 1.21.9-rc1 {
+            var uuid = profile.id();
+            var name = profile.name();
+            //?} else {
+            /*var uuid = profile.getId();
+            var name = profile.getName();
+            *///?}
+
+            JoinCache.cachedPermissions.put(uuid, cachedPermissions);
             for (String cachedPermission : CACHE_ON_QUERY) {
                 try {
-                    TriState result = Permissions.getPermissionValue(profile.getId(), cachedPermission).join();
+                    TriState result = Permissions.getPermissionValue(uuid, cachedPermission).join();
                     cachedPermissions.put(cachedPermission, result);
                 } catch (Exception e) {
-                    LOGGER.error("Failed to cache permission {} for {}", cachedPermission, profile.getName(), e);
+                    LOGGER.error("Failed to cache permission {} for {}", cachedPermission, name, e);
                 }
             }
         });

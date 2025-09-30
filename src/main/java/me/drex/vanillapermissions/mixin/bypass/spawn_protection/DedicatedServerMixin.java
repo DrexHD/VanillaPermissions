@@ -18,7 +18,11 @@ public abstract class DedicatedServerMixin {
         method = "isUnderSpawnProtection",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/server/dedicated/DedicatedPlayerList;isOp(Lcom/mojang/authlib/GameProfile;)Z"
+            //? if >= 1.21.9-rc1 {
+            target = "Lnet/minecraft/server/dedicated/DedicatedPlayerList;isOp(Lnet/minecraft/server/players/NameAndId;)Z"
+            //?} else {
+            /*target = "Lnet/minecraft/server/dedicated/DedicatedPlayerList;isOp(Lcom/mojang/authlib/GameProfile;)Z"
+            *///?}
         )
     )
     public boolean addSpawnProtectionPermission(boolean original, ServerLevel level, BlockPos pos, Player player) {

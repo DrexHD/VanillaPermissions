@@ -21,7 +21,7 @@
     "bypass.move_speed.ServerGamePacketListenerImplMixin",
     "bypass.spawn_protection.DedicatedServerMixin",
     "cached_permission.ServerLoginPacketListenerImplAccessor",
-    "cached_permission.bypass.force_gamemode.DefaultGameModeCommandsMixin",
+    "cached_permission.bypass.force_gamemode.MinecraftServerMixin",
     "cached_permission.bypass.force_gamemode.ServerPlayerMixin",
     "cached_permission.bypass.player_limit.DedicatedPlayerListMixin",
     "cached_permission.bypass.whitelist.DedicatedPlayerListMixin",

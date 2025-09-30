@@ -17,7 +17,11 @@ public abstract class EntityTypeMixin {
         method = "updateCustomEntityTag",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/server/players/PlayerList;isOp(Lcom/mojang/authlib/GameProfile;)Z"
+            //? if >= 1.21.9-rc1 {
+            target = "Lnet/minecraft/server/players/PlayerList;isOp(Lnet/minecraft/server/players/NameAndId;)Z"
+            //?} else {
+            /*target = "Lnet/minecraft/server/players/PlayerList;isOp(Lcom/mojang/authlib/GameProfile;)Z"
+            *///?}
         )
     )
     private static boolean addNbtLoadEntityPermission(boolean original, @Local Player player) {

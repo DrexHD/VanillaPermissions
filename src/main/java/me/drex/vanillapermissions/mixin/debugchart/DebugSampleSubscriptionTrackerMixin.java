@@ -1,7 +1,7 @@
 package me.drex.vanillapermissions.mixin.debugchart;
 
-//? if >= 1.20.5 {
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+//? if >= 1.20.5 && <= 1.21.8 {
+/*import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -38,12 +38,28 @@ public class DebugSampleSubscriptionTrackerMixin {
     }
 
 }
-//?} else {
+*///?} else {
 
-/*import net.minecraft.server.MinecraftServer;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
+import me.drex.vanillapermissions.util.Permission;
+import me.lucko.fabric.api.permissions.v0.Permissions;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.debug.ServerDebugSubscribers;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(MinecraftServer.class)
+@Mixin(ServerDebugSubscribers.class)
 public class DebugSampleSubscriptionTrackerMixin {
+    @ModifyExpressionValue(
+        method = "hasRequiredPermissions",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/players/PlayerList;isOp(Lnet/minecraft/server/players/NameAndId;)Z"
+        )
+    )
+    public boolean addDebugChartPermission2(boolean original, @Local(argsOnly = true) ServerPlayer serverPlayer) {
+        return Permissions.check(serverPlayer, Permission.DEBUG_CHART, original);
+    }
 }
-*///?}
+//?}

@@ -35,7 +35,12 @@ public abstract class ServerGamePacketListenerImplMixin {
     public boolean changeGameModePermissionCheck(
         ServerPlayer instance, int i, @Local(argsOnly = true) ServerboundChangeGameModePacket packet
     ) {
-        Commands commands = instance.getServer().getCommands();
+        //? if >= 1.21.9-rc1 {
+        var server = instance.level().getServer();
+        //?} else {
+        /*var server = instance.getServer();
+        *///?}
+        Commands commands = server.getCommands();
         ParseResults<CommandSourceStack> parseResults = commands.getDispatcher().parse("gamemode " + packet.mode().getName(), player.createCommandSourceStack());
         CommandSyntaxException exception = Commands.getParseException(parseResults);
         return exception == null;
