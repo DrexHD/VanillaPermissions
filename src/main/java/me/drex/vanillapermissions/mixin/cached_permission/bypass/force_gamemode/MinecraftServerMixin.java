@@ -1,6 +1,6 @@
 package me.drex.vanillapermissions.mixin.cached_permission.bypass.force_gamemode;
 
-//? if >= 1.21.9-rc1 {
+//? if >= 1.21.9 {
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

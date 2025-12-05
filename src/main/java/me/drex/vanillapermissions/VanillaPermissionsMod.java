@@ -10,7 +10,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +21,7 @@ import static me.drex.vanillapermissions.util.Permission.build;
 public class VanillaPermissionsMod implements ModInitializer {
 
     public static final String MOD_ID = "vanilla-permissions";
-    public static final ResourceLocation MODIFY_VANILLA_PERMISSIONS_PHASE = id("modify_vanilla_permissions");
+    public static final Identifier MODIFY_VANILLA_PERMISSIONS_PHASE = id("modify_vanilla_permissions");
     public static final Logger LOGGER = LogManager.getLogger();
 
     @Override
@@ -57,9 +57,9 @@ public class VanillaPermissionsMod implements ModInitializer {
         };
     }
 
-    public static ResourceLocation id(String path) {
+    public static Identifier id(String path) {
         //? if >= 1.21 {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
         //?} else {
         /*return new ResourceLocation(MOD_ID, path);
         *///?}

@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DebugStickItem;
@@ -25,7 +25,7 @@ public abstract class DebugStickItemMixin {
     )
     public boolean addDebugStickUsePermission(boolean original, Player player, BlockState state) {
         if (player instanceof ServerPlayer serverPlayer) {
-            ResourceLocation identifier = BuiltInRegistries.BLOCK.getKey(state.getBlock());
+            Identifier identifier = BuiltInRegistries.BLOCK.getKey(state.getBlock());
             return Permissions.check(serverPlayer, Permission.DEBUG_STICK_USE.formatted(BuiltInRegistries.ITEM.getKey(Items.DEBUG_STICK).getPath(), identifier.getNamespace(), identifier.getPath()), original);
         }
         return original;

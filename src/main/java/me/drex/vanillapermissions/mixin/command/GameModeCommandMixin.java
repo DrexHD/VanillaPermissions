@@ -9,6 +9,10 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.GameModeArgument;
 import net.minecraft.server.commands.GameModeCommand;
 import net.minecraft.server.level.ServerPlayer;
+//? if > 1.21.10 {
+import net.minecraft.server.permissions.Permission;
+import net.minecraft.server.permissions.PermissionLevel;
+//? }
 import net.minecraft.world.level.GameType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -35,7 +39,11 @@ public abstract class GameModeCommandMixin {
     @Overwrite
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralArgumentBuilder<CommandSourceStack> literalArgumentBuilder = Commands.literal("gamemode")
-            .requires(commandSourceStack -> commandSourceStack.hasPermission(2));
+            //? if > 1.21.10 {
+            .requires(commandSourceStack -> commandSourceStack.permissions().hasPermission(new Permission.HasCommandLevel(PermissionLevel.GAMEMASTERS)));
+            //? } else {
+            /*.requires(commandSourceStack -> commandSourceStack.hasPermission(2));
+            *///? }
 
         for (GameType gameType : GameType.values()) {
             literalArgumentBuilder.then(

@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import org.spongepowered.asm.mixin.Mixin;
@@ -40,7 +40,7 @@ public abstract class ServerGamePacketListenerImplMixin {
         )
     )
     public boolean addBypassMoveSpeedVehiclePermission(boolean original) {
-        ResourceLocation identifier = BuiltInRegistries.ENTITY_TYPE.getKey(this.player.getRootVehicle().getType());
+        Identifier identifier = BuiltInRegistries.ENTITY_TYPE.getKey(this.player.getRootVehicle().getType());
         return Permissions.check(this.player, Permission.BYPASS_MOVE_SPEED_VEHICLE.formatted(identifier.getNamespace(), identifier.getPath()), original);
     }
 }

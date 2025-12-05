@@ -19,7 +19,11 @@ public abstract class ServerGamePacketListenerImplMixin {
         method = "handleEntityTagQuery",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/server/level/ServerPlayer;hasPermissions(I)Z"
+            //? if > 1.21.10 {
+            target = "Lnet/minecraft/server/permissions/PermissionSet;hasPermission(Lnet/minecraft/server/permissions/Permission;)Z"
+            //? } else {
+            /*target = "Lnet/minecraft/server/level/ServerPlayer;hasPermissions(I)Z"
+            *///? }
         )
     )
     public boolean addNbtQueryEntityPermission(boolean original) {
@@ -30,7 +34,11 @@ public abstract class ServerGamePacketListenerImplMixin {
         method = "handleBlockEntityTagQuery",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/server/level/ServerPlayer;hasPermissions(I)Z"
+            //? if > 1.21.10 {
+            target = "Lnet/minecraft/server/permissions/PermissionSet;hasPermission(Lnet/minecraft/server/permissions/Permission;)Z"
+            //? } else {
+            /*target = "Lnet/minecraft/server/level/ServerPlayer;hasPermissions(I)Z"
+            *///? }
         )
     )
     public boolean addNbtQueryBlockPermission(boolean original) {

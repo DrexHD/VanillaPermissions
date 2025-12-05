@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.networking.v1.ServerLoginConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.util.TriState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import static me.drex.vanillapermissions.VanillaPermissionsMod.LOGGER;
 // so they can be used during the player join process with
 public class JoinCache {
 
-    public static final ResourceLocation CHECK_PERMISSIONS = VanillaPermissionsMod.id("check_permissions");
+    public static final Identifier CHECK_PERMISSIONS = VanillaPermissionsMod.id("check_permissions");
 
     private static final String[] CACHE_ON_QUERY = new String[]{
         Permission.BYPASS_WHITELIST,
@@ -37,7 +37,7 @@ public class JoinCache {
         ServerLoginConnectionEvents.QUERY_START.register(CHECK_PERMISSIONS, (handler, server, sender, synchronizer) -> {
             GameProfile profile = ((ServerLoginPacketListenerImplAccessor) handler).getAuthenticatedProfile();
             HashMap<String, TriState> cachedPermissions = new HashMap<>();
-            //? if >= 1.21.9-rc1 {
+            //? if >= 1.21.9 {
             var uuid = profile.id();
             var name = profile.name();
             //?} else {

@@ -32,7 +32,7 @@
     "nbt.BlockItemMixin",
     "nbt.EntityTypeMixin",
     "nbt.ServerGamePacketListenerImplMixin",
-    "operator_blocks.BaseCommandBlockMixin",
+    "operator_blocks.MinecartCommandBlockMixin",
     "operator_blocks.GameMasterBlockItemMixin",
     "operator_blocks.JigsawGenerateMixin",
     "operator_blocks.OperatorBlockMixin",

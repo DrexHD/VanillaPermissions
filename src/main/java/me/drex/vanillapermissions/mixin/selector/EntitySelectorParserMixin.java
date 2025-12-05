@@ -15,10 +15,12 @@ public abstract class EntitySelectorParserMixin {
         method = "allowSelectors",
         at = @At(
             value = "INVOKE",
-            //? if >= 1.21.6 {
-            target = "Lnet/minecraft/commands/PermissionSource;allowsSelectors()Z"
+            //? if > 1.21.10 {
+            target = "Lnet/minecraft/server/permissions/PermissionSet;hasPermission(Lnet/minecraft/server/permissions/Permission;)Z"
+            //? } else if >= 1.21.6 {
+//            target = "Lnet/minecraft/commands/CommandSourceStack;allowsSelectors()Z"
             //?} else {
-            /*target = "Lnet/minecraft/commands/SharedSuggestionProvider;hasPermission(I)Z"
+            /*target = "Lnet/minecraft/commands/CommandSourceStack;hasPermission(I)Z"
             *///?}
         )
     )

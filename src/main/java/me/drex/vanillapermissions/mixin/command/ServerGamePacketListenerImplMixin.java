@@ -13,6 +13,10 @@ import net.minecraft.network.protocol.game.ServerboundChangeGameModePacket;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
+//? if > 1.21.10 {
+import net.minecraft.server.permissions.PermissionCheck;
+import net.minecraft.server.permissions.PermissionSet;
+//? }
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,17 +33,22 @@ public abstract class ServerGamePacketListenerImplMixin {
         method = "handleChangeGameMode",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/server/level/ServerPlayer;hasPermissions(I)Z"
+            //? if > 1.21.10 {
+            target = "Lnet/minecraft/server/permissions/PermissionCheck;check(Lnet/minecraft/server/permissions/PermissionSet;)Z"
+            //? } else {
+            /*target = "Lnet/minecraft/server/level/ServerPlayer;hasPermissions(I)Z"
+            *///? }
         )
     )
     public boolean changeGameModePermissionCheck(
-        ServerPlayer instance, int i, @Local(argsOnly = true) ServerboundChangeGameModePacket packet
-    ) {
-        //? if >= 1.21.9-rc1 {
-        var server = instance.level().getServer();
-        //?} else {
-        /*var server = instance.getServer();
-        *///?}
+        //? if > 1.21.10 {
+        PermissionCheck instance, PermissionSet permissionSet,
+        //? } else {
+        /*ServerPlayer instance, int i,
+        *///? }
+        @Local(argsOnly = true) ServerboundChangeGameModePacket packet
+        ) {
+        var server = player.level().getServer();
         Commands commands = server.getCommands();
         ParseResults<CommandSourceStack> parseResults = commands.getDispatcher().parse("gamemode " + packet.mode().getName(), player.createCommandSourceStack());
         CommandSyntaxException exception = Commands.getParseException(parseResults);

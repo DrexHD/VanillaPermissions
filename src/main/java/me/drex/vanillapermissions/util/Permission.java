@@ -1,6 +1,6 @@
 package me.drex.vanillapermissions.util;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.commons.lang3.StringUtils;
 
 public class Permission {
@@ -32,7 +32,7 @@ public class Permission {
     public static final String SELECTOR_WEIGHT = permission("selector.weight.%s");
 
     protected static String permission(String permission) {
-        return build(ResourceLocation.DEFAULT_NAMESPACE, permission);
+        return build(Identifier.DEFAULT_NAMESPACE, permission);
     }
 
     public static String build(String... parts) {

@@ -2,9 +2,9 @@ import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.ChangelogPluginExtension
 
 plugins {
-    id("fabric-loom") version "1.11-SNAPSHOT"
+    id("fabric-loom") version "1.14-SNAPSHOT"
     id("maven-publish")
-    id("me.modmuss50.mod-publish-plugin") version "0.8.4"
+    id("me.modmuss50.mod-publish-plugin") version "1.1.0"
     id("org.jetbrains.changelog")
 }
 
@@ -21,6 +21,7 @@ java {
 
 repositories {
     mavenCentral()
+    maven("https://maven.nucleoid.xyz/")
 }
 
 loom {
@@ -44,6 +45,13 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${findProperty("fabric_version")}")
 
     includeMod("me.lucko:fabric-permissions-api:${findProperty("fabric_permissions_version")}")
+}
+
+stonecutter {
+    replacements.string(eval(current.version, "<=1.21.10")) {
+        replace("Identifier", "ResourceLocation")
+        replace("net.minecraft.util.Util", "net.minecraft.Util")
+    }
 }
 
 publishMods {
