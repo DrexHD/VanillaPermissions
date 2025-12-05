@@ -56,7 +56,7 @@ stonecutter {
 
 publishMods {
     file.set(tasks.remapJar.get().archiveFile)
-    type.set(BETA)
+    type.set(STABLE)
     changelog.set(fetchChangelog())
 
     displayName = "VanillaPermissions ${version.get()}"
