@@ -16,7 +16,11 @@ public abstract class GameModeSwitcherScreenMixin {
         method = "switchToHoveredGameMode(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/debug/GameModeSwitcherScreen$GameModeIcon;)V",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/player/LocalPlayer;hasPermissions(I)Z"
+            //? if >= 1.21.11 {
+            target = "Lnet/minecraft/server/permissions/PermissionCheck;check(Lnet/minecraft/server/permissions/PermissionSet;)Z"
+            //? } else {
+            /*target = "Lnet/minecraft/client/player/LocalPlayer;hasPermissions(I)Z"
+            *///? }
         )
     )
     private static boolean hasCommandAccess(boolean original, Minecraft minecraft, GameModeSwitcherScreen.GameModeIcon icon) {

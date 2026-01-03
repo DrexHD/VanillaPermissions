@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2025-01-04
+### Changed
+- Promoted to stable
+
+### Fixed
+- Client mixin crash on 1.21.11
+
 ## [0.3.1] - 2025-08-13
 ### Fixed
 - Performance degradation in 0.3.0

@@ -8,7 +8,19 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(KeyboardHandler.class)
 public abstract class KeyboardHandlerMixin {
 
+    //? if >= 1.21.11 {
     @ModifyExpressionValue(
+        method = "handleDebugKeys",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/permissions/PermissionCheck;check(Lnet/minecraft/server/permissions/PermissionSet;)Z"
+        )
+    )
+    public boolean allowDebugKeys(boolean original) {
+        return true;
+    }
+    //? } else {
+    /*@ModifyExpressionValue(
         method = "handleDebugKeys",
         at = @At(
             value = "INVOKE",
@@ -31,5 +43,6 @@ public abstract class KeyboardHandlerMixin {
     public boolean allowGameModeSwitcher(boolean original) {
         return true;
     }
+    *///? }
 
 }
