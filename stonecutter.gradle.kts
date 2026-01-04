@@ -7,3 +7,11 @@ stonecutter active "1.21.11"
 changelog {
     path = rootProject.file("CHANGELOG.md").path
 }
+
+stonecutter {
+    tasks {
+        order("publishGithub")
+        order("publishModrinth")
+        order("publishCurseforge")
+    }
+}
