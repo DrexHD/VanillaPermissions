@@ -20,7 +20,7 @@ public abstract class EntitySelectorParserMixin {
             //? } else if >= 1.21.6 {
             /*target = "Lnet/minecraft/commands/CommandSourceStack;allowsSelectors()Z"
             *///?} else {
-            /*target = "Lnet/minecraft/commands/CommandSourceStack;hasPermission(I)Z"
+            /*target = "Lnet/minecraft/commands/SharedSuggestionProvider;hasPermission(I)Z"
             *///?}
         )
     )
