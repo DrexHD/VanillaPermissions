@@ -61,7 +61,7 @@ public class VanillaPermissionsMod implements ModInitializer {
         //? if >= 1.21 {
         return Identifier.fromNamespaceAndPath(MOD_ID, path);
         //?} else {
-        /*return new ResourceLocation(MOD_ID, path);
+        /*return new Identifier(MOD_ID, path);
         *///?}
     }
 
