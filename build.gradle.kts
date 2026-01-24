@@ -33,9 +33,15 @@ loom {
     accessWidenerPath = file("../../src/main/resources/vanilla-permissions.accesswidener")
 }
 
-fun DependencyHandlerScope.includeMod(dep: String) {
-    include(modImplementation(dep)!!)
+fun DependencyHandlerScope.includeMod(
+    dep: String,
+    configure: ExternalModuleDependency.() -> Unit = {}
+) {
+    val dependency = modImplementation(dep) as ExternalModuleDependency
+    dependency.configure()
+    include(dependency)
 }
+
 
 dependencies {
     minecraft("com.mojang:minecraft:${findProperty("minecraft_version")}")
@@ -44,7 +50,9 @@ dependencies {
 
     modImplementation("net.fabricmc.fabric-api:fabric-api:${findProperty("fabric_version")}")
 
-    includeMod("me.lucko:fabric-permissions-api:${findProperty("fabric_permissions_version")}")
+    includeMod("me.lucko:fabric-permissions-api:${findProperty("fabric_permissions_version")}") {
+        exclude(group="net.fabricmc.fabric-api")
+    }
 }
 
 stonecutter {

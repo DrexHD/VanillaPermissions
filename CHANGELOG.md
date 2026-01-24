@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.5] - 2026-01-24
+### Fixed
+- Missing mixin in 1.20.1
+
 ## [0.3.4] - 2026-01-05
 ### Fixed
 - Mixin crash in 1.21.6–1.21.10
