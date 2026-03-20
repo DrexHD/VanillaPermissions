@@ -16,7 +16,20 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(DebugStickItem.class)
 public abstract class DebugStickItemMixin {
 
+    //? if > 1.21.11 {
     @ModifyExpressionValue(
+        method = "handleInteraction",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/level/ServerPlayer;canUseGameMasterBlocks()Z"
+        )
+    )
+    public boolean addDebugStickUsePermission(boolean original, ServerPlayer player, BlockState state) {
+        Identifier identifier = BuiltInRegistries.BLOCK.getKey(state.getBlock());
+        return Permissions.check(player, Permission.DEBUG_STICK_USE.formatted(BuiltInRegistries.ITEM.getKey(Items.DEBUG_STICK).getPath(), identifier.getNamespace(), identifier.getPath()), original);
+    }
+    //? } else {
+    /*@ModifyExpressionValue(
         method = "handleInteraction",
         at = @At(
             value = "INVOKE",
@@ -29,6 +42,7 @@ public abstract class DebugStickItemMixin {
             return Permissions.check(serverPlayer, Permission.DEBUG_STICK_USE.formatted(BuiltInRegistries.ITEM.getKey(Items.DEBUG_STICK).getPath(), identifier.getNamespace(), identifier.getPath()), original);
         }
         return original;
-    }
+    }*/
+    //? }
 
 }

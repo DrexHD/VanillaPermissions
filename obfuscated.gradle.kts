@@ -2,7 +2,7 @@ import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.ChangelogPluginExtension
 
 plugins {
-    id("net.fabricmc.fabric-loom") version "1.15-SNAPSHOT"
+    id("net.fabricmc.fabric-loom-remap") version "1.15-SNAPSHOT"
     id("maven-publish")
     id("me.modmuss50.mod-publish-plugin") version "1.1.0"
     id("org.jetbrains.changelog")
@@ -22,7 +22,6 @@ java {
 repositories {
     mavenCentral()
     maven("https://maven.nucleoid.xyz/")
-    mavenLocal()
 }
 
 loom {
@@ -38,16 +37,18 @@ fun DependencyHandlerScope.includeMod(
     dep: String,
     configure: ExternalModuleDependency.() -> Unit = {}
 ) {
-    val dependency = implementation(dep) as ExternalModuleDependency
+    val dependency = modImplementation(dep) as ExternalModuleDependency
     dependency.configure()
     include(dependency)
 }
 
+
 dependencies {
     minecraft("com.mojang:minecraft:${findProperty("minecraft_version")}")
-    implementation("net.fabricmc:fabric-loader:${findProperty("loader_version")}")
+    mappings(loom.officialMojangMappings())
+    modImplementation("net.fabricmc:fabric-loader:${findProperty("loader_version")}")
 
-    implementation("net.fabricmc.fabric-api:fabric-api:${findProperty("fabric_version")}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${findProperty("fabric_version")}")
 
     includeMod("me.lucko:fabric-permissions-api:${findProperty("fabric_permissions_version")}") {
         exclude(group="net.fabricmc.fabric-api")
@@ -55,7 +56,7 @@ dependencies {
 }
 
 publishMods {
-    file.set(tasks.jar.get().archiveFile)
+    file.set(tasks.remapJar.get().archiveFile)
     type.set(STABLE)
     changelog.set(fetchChangelog())
 
