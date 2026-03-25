@@ -22,7 +22,6 @@ java {
 repositories {
     mavenCentral()
     maven("https://maven.nucleoid.xyz/")
-    mavenLocal()
 }
 
 loom {
