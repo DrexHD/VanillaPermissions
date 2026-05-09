@@ -2,25 +2,31 @@ package me.drex.vanillapermissions.mixin.command;
 
 //? if >= 1.21.6 {
 
+import static net.minecraft.commands.Commands.getParseException;
+
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.brigadier.ParseResults;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import me.drex.vanillapermissions.util.Permission;
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.ChatFormatting;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundChangeGameModePacket;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 //? if > 1.21.10 {
 import net.minecraft.server.permissions.PermissionCheck;
 import net.minecraft.server.permissions.PermissionSet;
+import net.minecraft.world.level.gamerules.GameRule;
+import net.minecraft.world.level.gamerules.GameRules;
 //? }
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -47,12 +53,8 @@ public abstract class ServerGamePacketListenerImplMixin {
         /*ServerPlayer instance, int i,
         *///? }
         @Local(argsOnly = true) ServerboundChangeGameModePacket packet
-        ) {
-        var server = player.level().getServer();
-        Commands commands = server.getCommands();
-        ParseResults<CommandSourceStack> parseResults = commands.getDispatcher().parse("gamemode " + packet.mode().getName(), player.createCommandSourceStack());
-        CommandSyntaxException exception = Commands.getParseException(parseResults);
-        return exception == null;
+    ) {
+        return checkPermission("gamemode " + packet.mode().getName());
     }
 
     @Inject(
@@ -64,6 +66,72 @@ public abstract class ServerGamePacketListenerImplMixin {
     )
     public void sendFeedback(ServerboundChangeGameModePacket packet, CallbackInfo ci) {
         this.player.sendSystemMessage(Component.translatable("commands.help.failed").withStyle(ChatFormatting.RED));
+    }
+
+    //? if > 1.21.11 {
+    @Shadow
+    public abstract void setGameRuleValue(GameRules rules, GameRule<?> rule, String value);
+
+    @ModifyExpressionValue(
+        method = "sendGameRuleValues",
+        at = @At(
+            value = "INVOKE",
+            target = "hasPermission"
+        )
+    )
+    public boolean readGameRulePermissionCheck(boolean original) {
+        return true;
+    }
+
+    @ModifyExpressionValue(
+        method = "sendGameRuleValues",
+        at = @At(
+            value = "INVOKE",
+            target = "availableRules"
+        )
+    )
+    public <T> Stream<GameRule<T>> readGameRuleFilter(Stream<GameRule<T>> rules) {
+        return rules.filter(rule -> checkPermission("gamerule " + rule));
+    }
+
+    @ModifyExpressionValue(
+        method = "handleSetGameRule",
+        at = @At(
+            value = "INVOKE",
+            target = "hasPermission"
+        )
+    )
+    public boolean changeGameRulePermissionCheck(boolean original) {
+        return true;
+    }
+
+    @Redirect(
+        method = "handleSetGameRule",
+        at = @At(
+            value = "INVOKE",
+            target = "setGameRuleValue"
+        )
+    )
+    public void changeGameRuleFilter(ServerGamePacketListenerImpl instance, GameRules rules, GameRule<?> rule, String value) {
+        if (!checkPermission("gamerule " + rule + " " + value)) return;
+        setGameRuleValue(rules, rule, value);
+    }
+
+    @ModifyArg(
+        method = "broadcastGameRuleChangeToOperators",
+        at = @At(
+            value = "INVOKE",
+            target = "filter"
+        )
+    )
+    public Predicate<ServerPlayer> addAdminBroadcastReceivePermission(Predicate<ServerPlayer> original) {
+        return player -> Permissions.check(player, Permission.ADMIN_BROADCAST_RECEIVE, original.test(player));
+    }
+    //? }
+
+    private boolean checkPermission(String command) {
+        var parsed = player.level().getServer().getCommands().getDispatcher().parse(command, player.createCommandSourceStack());
+        return parsed != null && getParseException(parsed) == null;
     }
 }
 //?} else {
