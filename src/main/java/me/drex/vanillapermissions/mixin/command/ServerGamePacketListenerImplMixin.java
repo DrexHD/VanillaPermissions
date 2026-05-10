@@ -126,7 +126,11 @@ public abstract class ServerGamePacketListenerImplMixin {
         )
     )
     public Predicate<ServerPlayer> addAdminBroadcastReceivePermission(Predicate<ServerPlayer> original) {
-        return player -> Permissions.check(player, Permission.ADMIN_BROADCAST_RECEIVE, original.test(player));
+        return player -> switch (Permissions.getPermissionValue(player, Permission.ADMIN_BROADCAST_RECEIVE)) {
+            case TRUE -> true;
+            case FALSE -> false;
+            default -> original.test(player);
+        };
     }
     //? }
 
