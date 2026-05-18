@@ -8,6 +8,8 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import me.drex.vanillapermissions.util.Permission;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -70,14 +72,11 @@ public abstract class ServerGamePacketListenerImplMixin {
     }
 
     //? if > 1.21.11 {
-    @Shadow
-    public abstract void setGameRuleValue(GameRules rules, GameRule<?> rule, String value);
-
     @ModifyExpressionValue(
         method = "sendGameRuleValues",
         at = @At(
             value = "INVOKE",
-            target = "hasPermission"
+            target = "Lnet/minecraft/server/permissions/PermissionSet;hasPermission(Lnet/minecraft/server/permissions/Permission;)Z"
         )
     )
     public boolean readGameRulePermissionCheck(boolean original) {
@@ -88,7 +87,7 @@ public abstract class ServerGamePacketListenerImplMixin {
         method = "sendGameRuleValues",
         at = @At(
             value = "INVOKE",
-            target = "availableRules"
+            target = "Lnet/minecraft/world/level/gamerules/GameRules;availableRules()Ljava/util/stream/Stream;"
         )
     )
     public <T> Stream<GameRule<T>> readGameRuleFilter(Stream<GameRule<T>> rules) {
@@ -99,45 +98,46 @@ public abstract class ServerGamePacketListenerImplMixin {
         method = "handleSetGameRule",
         at = @At(
             value = "INVOKE",
-            target = "hasPermission"
+            target = "Lnet/minecraft/server/permissions/PermissionSet;hasPermission(Lnet/minecraft/server/permissions/Permission;)Z"
         )
     )
     public boolean changeGameRulePermissionCheck(boolean original) {
         return true;
     }
 
-    @Redirect(
+    @WrapOperation(
         method = "handleSetGameRule",
         at = @At(
             value = "INVOKE",
-            target = "setGameRuleValue"
+            target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;setGameRuleValue(Lnet/minecraft/world/level/gamerules/GameRules;Lnet/minecraft/world/level/gamerules/GameRule;Ljava/lang/String;)V"
         )
     )
-    public void changeGameRuleFilter(ServerGamePacketListenerImpl instance, GameRules rules, GameRule<?> rule, String value) {
-        if (!checkPermission("gamerule " + rule + " " + value)) return;
-        setGameRuleValue(rules, rule, value);
+    public void changeGameRuleFilter(
+        ServerGamePacketListenerImpl instance, GameRules rules, GameRule<?> rule, String value, Operation<Void> original
+    ) {
+        if (checkPermission("gamerule " + rule + " " + value)) {
+            original.call(instance, rules, rule, value);
+        }
     }
 
     @ModifyArg(
         method = "broadcastGameRuleChangeToOperators",
         at = @At(
             value = "INVOKE",
-            target = "filter"
+            target = "Ljava/util/stream/Stream;filter(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;"
         )
     )
     public Predicate<ServerPlayer> addAdminBroadcastReceivePermission(Predicate<ServerPlayer> original) {
-        return player -> switch (Permissions.getPermissionValue(player, Permission.ADMIN_BROADCAST_RECEIVE)) {
-            case TRUE -> true;
-            case FALSE -> false;
-            default -> original.test(player);
-        };
+        return player -> Permissions.getPermissionValue(player, Permission.ADMIN_BROADCAST_RECEIVE)
+            .orElseGet(() -> original.test(player));
     }
     //? }
 
     @Unique
     private boolean checkPermission(String command) {
-        var parsed = player.level().getServer().getCommands().getDispatcher().parse(command, player.createCommandSourceStack());
-        return parsed != null && getParseException(parsed) == null;
+        var parsed = player.level().getServer().getCommands().getDispatcher()
+            .parse(command, player.createCommandSourceStack());
+        return getParseException(parsed) == null;
     }
 }
 //?} else {
