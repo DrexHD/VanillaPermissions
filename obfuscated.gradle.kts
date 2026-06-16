@@ -2,7 +2,7 @@ import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.ChangelogPluginExtension
 
 plugins {
-    id("net.fabricmc.fabric-loom-remap") version "1.15-SNAPSHOT"
+    id("net.fabricmc.fabric-loom-remap") version "1.17-SNAPSHOT"
     id("maven-publish")
     id("me.modmuss50.mod-publish-plugin") version "1.1.0"
     id("org.jetbrains.changelog")
