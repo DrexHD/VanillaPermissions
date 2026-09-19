@@ -4,7 +4,7 @@ import org.jetbrains.changelog.ChangelogPluginExtension
 plugins {
     id("net.fabricmc.fabric-loom") version "1.17-SNAPSHOT"
     id("maven-publish")
-    id("me.modmuss50.mod-publish-plugin") version "1.1.0"
+    id("me.modmuss50.mod-publish-plugin") version "2.2.0"
     id("org.jetbrains.changelog")
 }
 
@@ -67,6 +67,8 @@ publishMods {
         accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
         projectId = "686569"
         minecraftVersions.addAll(findProperty("curseforge_minecraft_versions")!!.toString().split(", "))
+	client = true
+	server = true
     }
     modrinth {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
